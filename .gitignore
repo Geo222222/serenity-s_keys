@@ -1,0 +1,39 @@
+# Serenity's Keys monorepo ignore rules
+
+# Node.js dependencies and builds
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+.dist/
+dist/
+build/
+out/
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env files (keep .env.example committed)
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Alembic cache (generated)
+services/backend/serenitys-keys-backend/alembic/versions/__pycache__/

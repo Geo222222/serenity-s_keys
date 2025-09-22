@@ -1,17 +1,27 @@
-# Booking Portal (Next.js)
+# Serenity''s Keys Booking Portal
 
-Planned App Router project for program selection, scheduling, and payments.
+Minimal Next.js App Router UI for families to pick a program, view availability, and kick off Stripe checkout.
 
-## MVP Scope
-- Program selection landing with pricing (trial, private, group, package).
-- Availability view fed by `/api/booking/availability`.
-- Stripe Checkout integration (trial, packages, memberships) with provisional seat lock.
-- Confirmation screen + ICS download + Meet link summary.
+## Getting Started
 
-## Tech Stack
-- Next.js 14 App Router + Tailwind + shadcn/ui.
-- Server Actions for backend calls where possible.
-- Clerk/Auth.js for parent authentication.
-- Lucide icons + React Hook Form for form experiences.
+```bash
+npm install
+npm run dev
+```
 
-Use this folder to bootstrap the Next.js project (`npx create-next-app@latest`).
+Create a `.env.local` if you need overrides:
+
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+NEXT_PUBLIC_ADMIN_TOKEN=dev
+```
+
+## Pages
+
+- `/programs` – list of cohorts (group ages 6-8, 9-11, 12-14, private).
+- `/availability?course=group:6-8` – fetches `POST /api/availability` and renders bookable sessions.
+- `/launchpad?session_id=1&student_id=1` – Meet + Typing.com quick actions for kids/parents.
+- `/admin` – lightweight utilities to upload Typing.com CSVs and create sessions (gated by `NEXT_PUBLIC_ADMIN_TOKEN`).
+- `/success` and `/cancel` – simple post-checkout messaging.
+
+Checkout kicks the browser to the URL returned by `POST /api/booking/checkout`. In dev, the backend returns a placeholder URL when Stripe keys are missing.

@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./services/backend/serenitys-keys-backend
+    env_file:
+      - ./services/backend/serenitys-keys-backend/.env
+    volumes:
+      - ./services/backend/serenitys-keys-backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+    ports:
+      - "8080:8080"
+
+  landing:
+    image: node:18
+    working_dir: /workspace
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    environment:
+      - VITE_API_BASE_URL=http://backend:8080
+    volumes:
+      - ./apps/serenitys-keys-landing:/workspace
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  booking:
+    image: node:18
+    working_dir: /workspace
+    command: sh -c "npm install && npm run dev -- --hostname 0.0.0.0 --port 3000"
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:8080
+    volumes:
+      - ./apps/booking-portal:/workspace
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
