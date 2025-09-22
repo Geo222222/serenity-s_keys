@@ -21,6 +21,7 @@ from fastapi import (
     Header,
     HTTPException,
     Request,
+    Response,
     UploadFile,
     status,
 )
@@ -94,13 +95,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def add_request_id(request: Request, call_next):
+    request_id = request.headers.get("x-request-id") or str(uuid.uuid4())
+    response: Response = await call_next(request)
+    response.headers["x-request-id"] = request_id
+    return response
+
 
 @app.on_event("startup")
 async def on_startup() -> None:
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Database tables ensured via create_all().")
-    start_scheduler(app)
+    if settings.app_env.lower() in {"prod", "production", "prod_primary"}:
+        start_scheduler(app)
 
 
 @app.get("/health")
@@ -243,6 +252,12 @@ async def booking_checkout(
     if not student:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Student not found")
 
+    if payload.typing_username:
+        normalized_username = payload.typing_username.strip()
+        if normalized_username and student.typing_username != normalized_username:
+            student.typing_username = normalized_username
+            db.add(student)
+
     enrolled_count = await _count_enrollments(db, session_obj.id)
     if enrolled_count >= session_obj.capacity:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Session is full")
@@ -297,14 +312,18 @@ async def booking_checkout(
 
 
 @app.post("/webhooks/stripe")
-@limiter.limit("10/minute")
+@limiter.limit("60/minute")
 async def stripe_webhook(request: Request, db: AsyncSession = Depends(get_session)) -> dict[str, str]:
     payload = await request.body()
     sig_header = request.headers.get("Stripe-Signature", "")
 
     event_data: dict[str, Any] | None = None
 
-    if settings.stripe_webhook_secret and stripe:
+    use_dev_mode = settings.app_env.lower() == "dev"
+    if not use_dev_mode:
+        if not (settings.stripe_webhook_secret and stripe):
+            logger.error("Stripe webhook secret or library missing in non-dev environment")
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Stripe webhook verification disabled")
         try:
             event = stripe.Webhook.construct_event(
                 payload=payload,
@@ -341,6 +360,7 @@ async def submit_contact_form(_: ContactIn) -> dict[str, str]:
 async def import_typing_metrics(
     file: UploadFile = File(...),
     db: AsyncSession = Depends(get_session),
+    _: dict[str, Any] = Depends(require_admin),
 ) -> dict[str, int]:
     content = await file.read()
     try:
@@ -363,11 +383,23 @@ async def import_typing_metrics(
 
     imported = 0
     for row in reader:
-        student_name = _safe_strip(row.get(header_map["student"], ""))
-        if not student_name:
+        name_value = _safe_strip(row.get(header_map.get("student", ""), "")) if "student" in header_map else ""
+        username_value = _safe_strip(row.get(header_map.get("typing_username", ""), "")) if "typing_username" in header_map else ""
+        if not name_value and not username_value:
             continue
 
-        student = await _get_or_create_student(db, student_name)
+        student = None
+        if username_value:
+            stmt = select(Student).where(func.lower(Student.typing_username) == username_value.lower())
+            student = (await db.execute(stmt)).scalar_one_or_none()
+        if not student and name_value:
+            student = await _get_or_create_student(db, name_value)
+        if not student:
+            continue
+        if username_value and student.typing_username != username_value:
+            student.typing_username = username_value
+            db.add(student)
+
         metric_date = _parse_date(row.get(header_map["date"], ""))
         if metric_date is None:
             continue
@@ -575,6 +607,13 @@ async def _handle_checkout_completed(event_data: dict[str, Any], db: AsyncSessio
     session_obj = await db.get(Session, session_id)
     student = await db.get(Student, student_id)
     parent: Optional[Parent] = None
+    if student and typing_username:
+        normalized_username = typing_username.strip()
+        if normalized_username and student.typing_username != normalized_username:
+            student.typing_username = normalized_username
+            db.add(student)
+            await db.commit()
+            await db.refresh(student)
     if student and student.parent_id:
         parent = await db.get(Parent, student.parent_id)
 
@@ -638,6 +677,7 @@ def _build_header_map(headers: List[str]) -> dict[str, str]:
         "wpm": {"wpm", "speed"},
         "accuracy": {"accuracy"},
         "time_spent": {"time", "minutes", "time_spent", "time (minutes)"},
+        "typing_username": {"typing_username", "username", "typing user", "typing.com username"},
     }
     mapping: dict[str, str] = {}
     canonical_headers = [h.strip().lower() for h in headers]
