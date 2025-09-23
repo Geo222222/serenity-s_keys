@@ -2,19 +2,26 @@
 from __future__ import annotations
 
 import asyncio
+import sys
 from datetime import date, datetime, time, timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.config import get_settings
-from app.db import AsyncSessionLocal
-from app.models import Session
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.append(str(BASE_DIR))
+
+from app.config import get_settings  # noqa: E402
+from app.db import AsyncSessionLocal, Base, engine  # noqa: E402
+from app.models import Session  # noqa: E402
 
 settings = get_settings()
 
 COURSE_GROUPS = [
+    ("group:3-5", time(hour=15, minute=30), 30, 3),
     ("group:6-8", time(hour=16, minute=0), 45, 4),
     ("group:9-11", time(hour=16, minute=0), 45, 4),
     ("group:12-14", time(hour=16, minute=0), 45, 4),
@@ -26,6 +33,9 @@ async def main() -> None:
     tz = settings.timezone_info
     today = datetime.now(tz).date()
     created = 0
+
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
     async with AsyncSessionLocal() as session:
         for offset in range(14):

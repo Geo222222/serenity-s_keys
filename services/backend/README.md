@@ -48,7 +48,7 @@ alembic revision -m "message" --autogenerate
 
 ## Seeding Sessions
 
-Populate the next 14 days of sessions (Mon/Wed/Fri group cohorts and daily private slots):
+Populate the next 14 days of sessions (Mini Movers Mon/Wed/Fri at 3:30pm CT, core groups at 4pm CT, and daily private slots):
 
 ```bash
 python scripts/seed_sessions.py
@@ -111,3 +111,4 @@ curl -X POST http://localhost:8080/api/admin/session \
 ```
 
 Stripe and Google integrations fall back to safe placeholders when credentials are not configured. When Stripe webhooks succeed, the service now emails parents a confirmation with Meet + Launchpad links and an inline calendar invite.
+
