@@ -34,6 +34,25 @@ const HOME_PROGRAMS = [
   },
 ];
 
+const PROOF_POINTS = [
+  {
+    stat: '150+',
+    label: 'families coached so far',
+    detail: 'Real parent feedback informs every drill, email, and Launchpad enhancement we ship.',
+  },
+  {
+    stat: '92%',
+    label: 'kids ask to come back',
+    detail: 'Small wins + playful coaching keeps younger learners excited for the next session.',
+  },
+  {
+    stat: '4.9/5',
+    label: 'parent satisfaction',
+    detail: 'Parents love seeing instant confirmations, consistent Meet links, and transparent metrics.',
+  },
+];
+
+
 const HOW_IT_WORKS_STEPS = [
   {
     title: "Pick a class",
@@ -101,6 +120,24 @@ const Home = () => {
       <Hero />
       <FeatureRow />
       <EarlyStartHighlights />
+
+      <section>
+        <div className="container">
+          <div className="section-label">Why families choose us</div>
+          <h2 className="section-title">Built for parents who want calm, joyful progress</h2>
+          <div className="proof-grid">
+            {PROOF_POINTS.map((point) => (
+              <article key={point.label} className="proof-card">
+                <strong>{point.stat}</strong>
+                <div>
+                  <h3 style={{ margin: 0 }}>{point.label}</h3>
+                  <p style={{ margin: 0, color: "var(--color-muted)" }}>{point.detail}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section>
         <div className="container">
@@ -194,3 +231,8 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+
+

@@ -1,5 +1,6 @@
 import React from "react";
 import { BOOKING_BASE_URL } from "../config";
+import logoMark from "../assets/serenity-keys-logo.png";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -14,10 +15,15 @@ const SharedFooter = () => (
   <footer className="footer">
     <div className="container footer-grid">
       <div className="footer-column">
-        <h4>Serenity's Keys</h4>
-        <p style={{ color: "var(--color-muted)", margin: 0 }}>
-          Live typing classes that blend structure, coaching, and clear results for families.
-        </p>
+        <div className="footer-brand">
+          <img src={logoMark} alt="Serenity's Keys logo" />
+          <div>
+            <h4>Serenity's Keys</h4>
+            <p style={{ color: "var(--color-muted)", margin: 0 }}>
+              Live typing classes that blend structure, coaching, and clear results for families.
+            </p>
+          </div>
+        </div>
         <div style={{ marginTop: "16px", display: "flex", gap: "12px" }}>
           <a className="btn btn-secondary" href={`${BOOKING_BASE_URL}/programs`}>
             Book a Class
@@ -66,3 +72,4 @@ const SharedFooter = () => (
 );
 
 export default SharedFooter;
+

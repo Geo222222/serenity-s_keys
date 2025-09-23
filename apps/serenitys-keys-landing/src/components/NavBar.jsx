@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BOOKING_BASE_URL } from "../config";
+import logoMark from "../assets/serenity-keys-logo.png";
 
 const links = [
   { to: "/programs", label: "Programs" },
@@ -22,7 +23,8 @@ const NavBar = () => {
           Skip to content
         </a>
         <a href="/" className="brand" onClick={closeMenu}>
-          Serenity's Keys
+          <img src={logoMark} alt="Serenity's Keys logo" className="brand-logo" />
+          <span className="brand-wordmark">Serenity's Keys</span>
         </a>
         <button
           className="mobile-nav-toggle"
@@ -54,11 +56,7 @@ const NavBar = () => {
               </li>
             ))}
             <li>
-              <a
-                className="btn btn-primary"
-                href={`${BOOKING_BASE_URL}/programs`}
-                rel="noreferrer"
-              >
+              <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`} rel="noreferrer">
                 Book a Class
               </a>
             </li>
@@ -70,3 +68,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+

@@ -3,6 +3,7 @@ import { BOOKING_BASE_URL } from "../config";
 
 const Hero = () => (
   <section className="hero">
+    <div className="hero-gradient" aria-hidden="true" />
     <div className="container hero-content">
       <div>
         <span className="hero-badge">Serenity started typing at 3 · Your child can too</span>
@@ -20,16 +21,9 @@ const Hero = () => (
         </div>
       </div>
       <div className="hero-visual">
-        <div
-          style={{
-            background: "linear-gradient(160deg, rgba(37,99,235,0.12), rgba(14,165,233,0.16))",
-            borderRadius: "24px",
-            padding: "28px",
-            boxShadow: "var(--shadow-md)",
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>Today's Micro-Rotation</h3>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "14px" }}>
+        <div className="hero-visual-card">
+          <h3>Today's Micro-Rotation</h3>
+          <ul>
             <li>
               <strong>Warm-up:</strong> Finger-play story for preschoolers / 5-minute home-row sprint for older kids
             </li>
@@ -44,9 +38,15 @@ const Hero = () => (
             </li>
           </ul>
         </div>
+        <div className="hero-floating-card">
+          <span className="hero-floating-card__eyebrow">Next open cohort</span>
+          <strong>Mini Movers · Mon / Wed / Fri</strong>
+          <p>3:30pm CT · 30 minutes · Limit 3 kiddos</p>
+        </div>
       </div>
     </div>
   </section>
 );
 
 export default Hero;
+
