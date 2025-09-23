@@ -351,10 +351,29 @@ async def stripe_webhook(request: Request, db: AsyncSession = Depends(get_sessio
 
 
 @app.post("/api/contact")
-async def submit_contact_form(_: ContactIn) -> dict[str, str]:
-    # Stub handler for Phase 0; integrate email service in later phase.
-    return {"status": "ok"}
+async def submit_contact_form(payload: ContactIn) -> dict[str, str]:
+    recipient = settings.contact_inbox_email or settings.from_email
+    if not recipient:
+        logger.error("CONTACT_INBOX_EMAIL not configured; unable to route contact form")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Contact inbox not configured")
 
+    subject = f"Serenity's Keys Inquiry from {payload.name}"
+    message_html = payload.message.replace("\r\n", "\n").replace("\n", "<br/>")
+    html = (
+        "<h2>New Contact Inquiry</h2>"
+        f"<p><strong>Name:</strong> {payload.name}</p>"
+        f"<p><strong>Email:</strong> {payload.email}</p>"
+        f"<p><strong>Message:</strong><br/>{message_html}</p>"
+    )
+
+    try:
+        await send_email(recipient, subject, html)
+        log("contact_message_received", name=payload.name, email=payload.email)
+    except Exception as exc:  # pragma: no cover - external service failures
+        logger.error("Unable to deliver contact inquiry email: %s", exc)
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Unable to deliver message")
+
+    return {"status": "ok"}
 
 @app.post("/api/typing/import")
 async def import_typing_metrics(
@@ -740,3 +759,4 @@ async def _get_or_create_student(db: AsyncSession, name: str) -> Student:
     db.add(student)
     await db.flush()
     return student
+

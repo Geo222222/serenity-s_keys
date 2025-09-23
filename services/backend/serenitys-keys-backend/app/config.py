@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     sendgrid_api_key: str = Field(default="", alias="SENDGRID_API_KEY")
     resend_api_key: str = Field(default="", alias="RESEND_API_KEY")
     from_email: str = Field(default="no-reply@serenityskeys.com", alias="FROM_EMAIL")
+    contact_inbox_email: str = Field(default="hello@serenityskeys.com", alias="CONTACT_INBOX_EMAIL")
 
     cors_allow_origins: str = Field(
         default="http://localhost:5173,http://localhost:3000",

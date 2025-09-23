@@ -2,6 +2,12 @@ import type { CSSProperties } from "react";
 
 const PROGRAMS = [
   {
+    id: "group:3-5",
+    name: "Mini Movers Ages 3-5",
+    blurb: "Sensory-rich 30 minute sessions to spark curiosity and healthy habits.",
+    defaultPriceCents: 3500,
+  },
+  {
     id: "group:6-8",
     name: "Group Ages 6-8",
     blurb: "Foundations and fun race challenges for younger typists.",

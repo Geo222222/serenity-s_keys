@@ -20,7 +20,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
 
 The API serves OpenAPI docs at `http://localhost:8080/docs`.
 
-Set `RESEND_API_KEY` + `FROM_EMAIL` for transactional email, Stripe keys for live checkout, and Google service account details for real Meet links. `LAUNCHPAD_BASE_URL` controls the link used in confirmation emails.
+Set `RESEND_API_KEY` + `FROM_EMAIL` (and `CONTACT_INBOX_EMAIL` for inbound inquiries) for transactional email, Stripe keys for live checkout, and Google service account details for real Meet links. `LAUNCHPAD_BASE_URL` controls the link used in confirmation emails.
 
 # Database Migrations
 
@@ -111,4 +111,5 @@ curl -X POST http://localhost:8080/api/admin/session \
 ```
 
 Stripe and Google integrations fall back to safe placeholders when credentials are not configured. When Stripe webhooks succeed, the service now emails parents a confirmation with Meet + Launchpad links and an inline calendar invite.
+
 
