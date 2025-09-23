@@ -5,50 +5,50 @@ import { BOOKING_BASE_URL } from "../config";
 
 const PLANS = [
   {
-    name: "Group Session",
-    price: "",
-    cadence: "per 45-minute class",
-    description: "Perfect for ages 6–14 who thrive with peers and live coaching.",
+    name: "Mini Movers (ages 3-5)",
+    price: "$35",
+    cadence: "per 30-minute class",
+    description: "Sensory-rich adventures that build familiarity with letters and gentle motor control.",
     items: [
-      "Live Google Meet class (max 5 students)",
-      "Typing.com drill plan tailored to the group",
-      "Launchpad link with Meet + assignments",
-      "Progress email with WPM, accuracy, goals",
+      "Live coach with early-childhood training",
+      "Movement and music resets every 7 minutes",
+      "Grown-up support cue sheet",
+      "Progress snapshot emailed after class",
+    ],
+    link: `${BOOKING_BASE_URL}/programs`,
+  },
+  {
+    name: "Core Group (ages 6-11)",
+    price: "$45",
+    cadence: "per 45-minute class",
+    description: "Structured drills to boost speed, accuracy, and confidence for elementary learners.",
+    items: [
+      "Max 5 learners per class",
+      "Typing.com mastery missions",
+      "Weekly goal tracking",
+      "Parent recap with at-home prompts",
     ],
     link: `${BOOKING_BASE_URL}/programs`,
   },
   {
     name: "Private Coaching",
-    price: "",
+    price: "$65",
     cadence: "per 45-minute class",
-    description: "One-on-one support for accelerated goals or unique learning needs.",
+    description: "One-on-one coaching tailored to siblings, neurodiverse learners, or accelerated goals.",
     items: [
-      "Custom schedule and pacing",
-      "Personalized skill roadmap",
-      "Weekly parent sync notes",
-      "Flexible drills and advanced challenges",
+      "Flexible scheduling",
+      "Custom curriculum",
+      "Coach-parent sync every week",
+      "Optional coding + productivity modules",
     ],
     link: `${BOOKING_BASE_URL}/programs?course=${encodeURIComponent("private:all")}`,
-  },
-  {
-    name: "Starter Pack",
-    price: "",
-    cadence: "8 group classes",
-    description: "Commit to a month of progress with bundled savings.",
-    items: [
-      "All group session benefits",
-      "Goal tracking across the pack",
-      "Mid-pack check-in with coach",
-      "Priority scheduling assistance",
-    ],
-    link: `${BOOKING_BASE_URL}/programs`,
   },
 ];
 
 const Pricing = () => {
   usePageMetadata({
     title: "Pricing | Serenity's Keys",
-    description: "Group typing classes from  per session and private coaching for accelerated goals. Progress email after every class.",
+    description: "Group typing classes from $35 and private coaching from $65. Every session comes with a detailed progress email.",
   });
 
   return (
@@ -58,7 +58,7 @@ const Pricing = () => {
           <div className="section-label">Pricing</div>
           <h1 className="section-title">Simple pricing, crystal-clear value</h1>
           <p className="section-subtitle">
-            Every plan includes Launchpad access, Typing.com drill alignment, and post-class progress reports for parents.
+            Every plan includes Launchpad access, Typing.com alignment, and post-class progress reports for parents. Stripe checkout and automated calendar invites will roll out shortly—reserve now and we will confirm within 24 hours.
           </p>
           <div className="table-pricing">
             {PLANS.map((plan) => (
@@ -86,7 +86,7 @@ const Pricing = () => {
           <div className="section-label">Financial access</div>
           <h2 className="section-title">Scholarships & community rates</h2>
           <p className="section-subtitle" style={{ maxWidth: "720px" }}>
-            We reserve seats each month for families that need reduced pricing. Email us with "Scholarship" in the subject and we’ll set up a plan that fits.
+            We reserve seats each month for families needing reduced pricing. Email us with "Scholarship" in the subject and we’ll set up a plan that fits.
           </p>
           <a className="btn btn-secondary" href="mailto:hello@serenityskeys.com">
             Contact us about scholarships

@@ -3,17 +3,17 @@ import React from "react";
 const TESTIMONIALS = [
   {
     quote:
-      "My daughter looks forward to typing class now. The email summary shows exactly what she improved.",
-    name: "Amber, Chicago",
+      "Serenity's Keys made typing approachable for our three-year-old. The coach sang through the keys and we saw real progress in a week.",
+    name: "Danielle, Atlanta",
   },
   {
     quote:
-      "The Launchpad made remote learning easy—Meet link, Typing.com, and notes all in one place.",
+      "Launchpad keeps everything in one link. The Google Calendar invite and Stripe receipt land in my inbox without me chasing anything.",
     name: "Jonathan, Austin",
   },
   {
     quote:
-      "We went from 12 WPM to 32 WPM in a month. The structure and encouragement really work.",
+      "We went from 12 WPM to 32 WPM in a month. The structure and encouragement really work--even for my middle schooler who thought typing was boring before.",
     name: "Priya, Seattle",
   },
 ];

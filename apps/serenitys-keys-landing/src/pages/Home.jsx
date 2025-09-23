@@ -5,54 +5,62 @@ import ProgramCard from "../components/ProgramCard";
 import Testimonials from "../components/Testimonials";
 import TrustBar from "../components/TrustBar";
 import CTASection from "../components/CTASection";
+import EarlyStartHighlights from "../components/EarlyStartHighlights";
 import { usePageMetadata } from "../hooks/usePageMetadata";
 import { BOOKING_BASE_URL } from "../config";
 import { sendContactMessage } from "../utils/EmailService";
 
 const HOME_PROGRAMS = [
   {
+    course: "group:3-5",
+    title: "Mini Movers Ages 3–5",
+    description: "Playful stories, finger stretches, and picture-backed keys that make first typing moments magical.",
+    details: ["30-minute class", "Max 3 learners", "Movement + music cues"],
+    outcomes: ["Curiosity on the keyboard", "Gentle finger strength", "Early letter-location awareness"],
+  },
+  {
     course: "group:6-8",
     title: "Group Ages 6–8",
-    description: "Home-row mastery with fun drills and lots of confidence building.",
-    details: ["45-minute sessions", "Max 4 students", "Teacher-guided warm-ups"],
-    outcomes: ["Home row accuracy", "Keyboard posture", "Positive typing habits"],
+    description: "Home-row mastery with games, accuracy focus, and a calm pace.",
+    details: ["45-minute class", "Max 4 learners", "Teacher-led warm-up"],
+    outcomes: ["Home row accuracy", "Correct finger reaches", "Positive posture"],
   },
   {
     course: "group:9-11",
     title: "Group Ages 9–11",
-    description: "Build speed without losing accuracy. Perfect for school projects.",
-    details: ["45-minute sessions", "Max 5 students", "Goal tracking each class"],
-    outcomes: ["Speed +3 WPM each month", "Accuracy above 95%", "Keyboard shortcuts"],
+    description: "Speed building with strong accuracy—perfect for school projects.",
+    details: ["45-minute class", "Max 5 learners", "Weekly goal tracking"],
+    outcomes: ["+3 WPM monthly", "Accuracy above 95%", "Keyboard shortcuts"],
   },
 ];
 
 const HOW_IT_WORKS_STEPS = [
   {
-    title: "Book a class",
-    description: "Pick a program and checkout through Stripe—your spot is reserved instantly.",
+    title: "Pick a class",
+    description: "Choose an age-fit session, complete Stripe checkout (setup in progress), and secure your seat instantly.",
   },
   {
-    title: "Open the Launchpad",
-    description: "We send one link that holds the Meet, Typing.com, and notes together.",
+    title: "Receive Launchpad",
+    description: "We drop a Google Calendar invite with Meet + Typing.com links so you and your child are one click away.",
   },
   {
-    title: "Learn on Typing.com",
-    description: "Teachers run live drills and timed sprints matched to your child’s goals.",
+    title: "Coach-led adventure",
+    description: "Teachers mix movement, music, and mastery drills tuned to your child’s attention span and goals.",
   },
   {
-    title: "Progress email",
-    description: "Parents get WPM, accuracy, and next steps right after class.",
+    title: "Celebrate progress",
+    description: "Parents get WPM, accuracy, coach notes, and at-home practice ideas minutes after class.",
   },
 ];
 
 const Home = () => {
   usePageMetadata({
-    title: "Serenity's Keys | Live Typing Classes for Kids",
+    title: "Serenity's Keys | Live Typing Classes for Kids 3+",
     description:
-      "Live Google Meet typing classes using Typing.com. Structured curriculum, teachers who care, and progress emails parents trust.",
+      "Live Google Meet typing classes starting at age 3. Nurturing coaches, Stripe-ready checkout, and progress emails parents trust.",
     openGraph: {
       title: "Live typing classes kids love. Progress parents can see.",
-      description: "Serenity's Keys blends Typing.com drills with live coaching and Launchpad convenience.",
+      description: "Serenity's Keys blends Typing.com adventures with warm coaching for ages 3 and up.",
       image: "/og-image.png",
       url: "https://serenityskeys.com/",
     },
@@ -92,6 +100,7 @@ const Home = () => {
     <main id="main-content">
       <Hero />
       <FeatureRow />
+      <EarlyStartHighlights />
 
       <section>
         <div className="container">
@@ -131,11 +140,11 @@ const Home = () => {
               <div className="badge">private:all</div>
               <h3 style={{ margin: 0 }}>Private coaching</h3>
               <p style={{ margin: 0, color: "var(--color-muted)" }}>
-                One-on-one sessions for learners who need a custom pace or specific goals—siblings, neurodiverse learners, or future coders.
+                One-on-one sessions for siblings, neurodiverse learners, or families who want a custom mix of music, coding, and speed drills.
               </p>
               <ul className="pricing-list">
                 <li>Flexible schedule</li>
-                <li>Customized drills</li>
+                <li>Personalized drills</li>
                 <li>Weekly parent check-ins</li>
               </ul>
               <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs?course=${encodeURIComponent("private:all")}`}>
@@ -150,9 +159,9 @@ const Home = () => {
         <div className="container ai-waitlist">
           <div>
             <div className="section-label">AI Mentor · Coming soon</div>
-            <h2 className="section-title">Serenity AI will run the session while cheering your child on.</h2>
+            <h2 className="section-title">Serenity AI will coach alongside our teachers.</h2>
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
-              An AI coach that joins Meet, greets your child, sets goals, runs drills, and emails you the summary. Join the waitlist to get notified when invites open.
+              We are wiring Stripe and Google Calendar right now so your automation is seamless. Join the waitlist to hear when the AI co-teacher pilot opens.
             </p>
           </div>
           <form onSubmit={handleWaitlistSubmit}>

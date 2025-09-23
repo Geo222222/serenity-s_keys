@@ -5,6 +5,13 @@ import { usePageMetadata } from "../hooks/usePageMetadata";
 
 const PROGRAMS = [
   {
+    course: "group:3-5",
+    title: "Mini Movers Ages 3–5",
+    description: "Short, sensory-rich sessions that introduce letter positions through story, color, and rhythm.",
+    details: ["30-minute class", "Max 3 learners", "Movement and music breaks"],
+    outcomes: ["Letter awareness", "Confident finger placement", "Positive keyboard mindset"],
+  },
+  {
     course: "group:6-8",
     title: "Group Ages 6–8",
     description: "Home-row mastery with games, accuracy focus, and a calm pace.",
@@ -37,7 +44,7 @@ const PROGRAMS = [
 const Programs = () => {
   usePageMetadata({
     title: "Programs | Serenity's Keys",
-    description: "Find the right typing class—group sessions for ages 6–14 and private coaching for custom goals.",
+    description: "Find the right typing class—starting at age 3 with sensory-friendly micro sessions through teen fluency coaching.",
   });
 
   return (
@@ -47,7 +54,7 @@ const Programs = () => {
           <div className="section-label">Programs</div>
           <h1 className="section-title">Choose the typing experience that fits your learner</h1>
           <p className="section-subtitle">
-            Every program meets for 45 minutes on Google Meet, uses Typing.com for guided drills, and ends with a progress summary to your inbox.
+            Every program meets live on Google Meet, taps Typing.com for guided drills, and ends with a progress summary emailed to you. Stripe checkout and Google Calendar invites are rolling out now for a seamless sign-up.
           </p>
           <div className="card-grid">
             {PROGRAMS.map((program) => (

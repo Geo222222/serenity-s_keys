@@ -5,33 +5,33 @@ import { BOOKING_BASE_URL } from "../config";
 const TIMELINE = [
   {
     title: "Book your session",
-    description: "Pick the right program in our booking portal and pay securely with Stripe. You immediately receive your Launchpad link.",
+    description: "Pick the right program in our booking portal, finish Stripe checkout (rolling out now), and reserve your spot instantly.",
   },
   {
     title: "Open the Launchpad",
-    description: "One link opens the Google Meet, Typing.com assignment, and session notes—no juggling tabs. Share it with your child and bookmark it for future classes.",
+    description: "One link opens Google Meet, Typing.com, and coach notes. Calendar invites land in your inbox so even preschoolers can click and go.",
   },
   {
-    title: "Coach-led typing on Typing.com",
-    description: "Teachers guide warm-ups, timed sprints, and targeted drills. Students stay on Typing.com while the coach watches and cheers via Meet.",
+    title: "Coach-led typing adventures",
+    description: "Teachers guide movement-rich warm-ups, story-based drills for little learners, and accuracy sprints for big kids.",
   },
   {
     title: "Progress email to parents",
-    description: "We capture WPM, accuracy, goals met, and suggested at-home practice. The email lands minutes after class ends.",
+    description: "We capture WPM, accuracy, goals met, and at-home prompts tailored to your child’s age and energy.",
   },
 ];
 
 const RESPONSIBILITIES = [
   "Create a free Typing.com account for your child and share the username.",
   "Ensure a laptop/Chromebook with a full keyboard, camera, microphone, and stable internet.",
-  "Provide a quiet space—noise-cancelling headphones help younger typists focus.",
+  "For ages 3-5, plan to sit nearby for the first few classes—our coaches will cue you when it is okay to step back.",
   "Encourage practice between classes using the drills we recommend in the progress email.",
 ];
 
 const HowItWorks = () => {
   usePageMetadata({
     title: "How It Works | Serenity's Keys",
-    description: "Book, launch, learn, and receive a progress summary. See how Serenity's Keys runs typing classes end-to-end.",
+    description: "Book, launch, learn, and receive a progress summary—even for brand-new typists starting at age 3.",
   });
 
   return (

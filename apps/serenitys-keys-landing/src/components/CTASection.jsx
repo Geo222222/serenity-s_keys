@@ -5,16 +5,16 @@ const CTASection = () => (
   <section className="alt">
     <div className="container" style={{ textAlign: "center", maxWidth: "760px" }}>
       <div className="section-label">Ready when you are</div>
-      <h2 className="section-title">Give your child a typing coach who sends progress you can trust.</h2>
+      <h2 className="section-title">Give your child a coach who understands tiny hands and big dreams.</h2>
       <p className="section-subtitle">
-        Book your first class, join via Launchpad, and get a clear summary after. We do the work—your child sees the gain.
+        Lock in your first class, connect the Google Calendar invite, and let us handle the Stripe checkout and Launchpad links while your child discovers the keyboard—age 3 and up.
       </p>
       <div className="hero-actions" style={{ justifyContent: "center" }}>
         <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
-          Book a Class
+          Choose a class time
         </a>
         <a className="btn btn-secondary" href="/pricing">
-          See Pricing
+          View family-friendly pricing
         </a>
       </div>
     </div>
