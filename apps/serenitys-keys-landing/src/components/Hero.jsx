@@ -11,7 +11,7 @@ const Hero = () => (
           Structured Google Meet sessions using Typing.com, with crystal-clear progress emails after each class.
         </p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href={${BOOKING_BASE_URL}/programs}>
+          <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
             Book a Class
           </a>
           <a className="btn btn-secondary" href='/how-it-works'>

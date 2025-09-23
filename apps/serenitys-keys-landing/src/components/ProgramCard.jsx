@@ -32,7 +32,7 @@ const ProgramCard = ({ course, title, description, details, outcomes }) => (
     </div>
     <a
       className="btn btn-primary"
-      href={${BOOKING_BASE_URL}/programs?course=}
+      href={`${BOOKING_BASE_URL}/programs?course=${encodeURIComponent(course)}`}
     >
       View Availability
     </a>

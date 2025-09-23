@@ -10,7 +10,7 @@ const CTASection = () => (
         Book your first class, join via Launchpad, and get a clear summary after. We do the work—your child sees the gain.
       </p>
       <div className="hero-actions" style={{ justifyContent: "center" }}>
-        <a className="btn btn-primary" href={${BOOKING_BASE_URL}/programs}>
+        <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
           Book a Class
         </a>
         <a className="btn btn-secondary" href="/pricing">

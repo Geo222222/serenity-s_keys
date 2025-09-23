@@ -138,7 +138,7 @@ const Home = () => {
                 <li>Customized drills</li>
                 <li>Weekly parent check-ins</li>
               </ul>
-              <a className="btn btn-primary" href={${BOOKING_BASE_URL}/programs?course=private:all}>
+              <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs?course=${encodeURIComponent("private:all")}`}>
                 View private options
               </a>
             </div>

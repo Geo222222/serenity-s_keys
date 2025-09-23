@@ -62,7 +62,7 @@ const HowItWorks = () => {
             <p className="section-subtitle">
               When class starts, your child opens Launchpad. It displays the Meet link, their Typing.com assignment, and coach notes. If they get disconnected, the same link brings them back instantly.
             </p>
-            <a className="btn btn-secondary" href={${BOOKING_BASE_URL}/launchpad}>
+            <a className="btn btn-secondary" href={`${BOOKING_BASE_URL}/launchpad`}>
               Preview the Launchpad
             </a>
           </div>

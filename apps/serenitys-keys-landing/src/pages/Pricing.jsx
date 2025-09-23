@@ -15,7 +15,7 @@ const PLANS = [
       "Launchpad link with Meet + assignments",
       "Progress email with WPM, accuracy, goals",
     ],
-    link: ${BOOKING_BASE_URL}/programs,
+    link: `${BOOKING_BASE_URL}/programs`,
   },
   {
     name: "Private Coaching",
@@ -28,7 +28,7 @@ const PLANS = [
       "Weekly parent sync notes",
       "Flexible drills and advanced challenges",
     ],
-    link: ${BOOKING_BASE_URL}/programs?course=private:all,
+    link: `${BOOKING_BASE_URL}/programs?course=${encodeURIComponent("private:all")}`,
   },
   {
     name: "Starter Pack",
@@ -41,7 +41,7 @@ const PLANS = [
       "Mid-pack check-in with coach",
       "Priority scheduling assistance",
     ],
-    link: ${BOOKING_BASE_URL}/programs,
+    link: `${BOOKING_BASE_URL}/programs`,
   },
 ];
 

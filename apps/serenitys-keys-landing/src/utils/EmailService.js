@@ -131,3 +131,53 @@ export const sendEducationInquiry = async (inquiryData) => {
     },
   );
 };
+
+export const sendContactMessage = async (contactData) => {
+  const name = contactData.name ?? contactData.parent_name ?? 'Parent';
+  const email = contactData.email ?? contactData.parent_email ?? '';
+  const phone = contactData.parent_phone ?? contactData.phone ?? '';
+
+  const detailLines = [contactData.message ?? ''];
+  if (phone) {
+    detailLines.push(`Phone: ${phone}`);
+  }
+  if (contactData.topic) {
+    detailLines.push(`Topic: ${contactData.topic}`);
+  }
+  if (contactData.origin) {
+    detailLines.push(`Origin: ${contactData.origin}`);
+  }
+
+  const payload = {
+    name,
+    email,
+    message: detailLines.filter(Boolean).join('\n').trim(),
+  };
+
+  const fallbackFormId = import.meta.env.VITE_FORMSPREE_CONTACT_ID ?? null;
+
+  return withFallback(
+    () => postToBackend('/api/contact', payload),
+    (primaryResult) => {
+      if (!fallbackFormId) {
+        return Promise.resolve(primaryResult);
+      }
+      return sendFormspreeSubmission(
+        {
+          name,
+          email,
+          phone: phone || undefined,
+          message: payload.message,
+          topic: contactData.topic ?? undefined,
+          origin: contactData.origin ?? undefined,
+        },
+        fallbackFormId,
+      ).then((result) => ({
+        ...result,
+        message: result.success
+          ? 'Contact message sent via Formspree fallback'
+          : result.message ?? primaryResult.message,
+      }));
+    },
+  );
+};

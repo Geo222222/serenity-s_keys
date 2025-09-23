@@ -17,7 +17,9 @@ const NavBar = () => {
   return (
     <header className="navbar">
       <div className="container navbar-inner">
-        <a href="#main-content" className="skip-link">Skip to content</a>
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <a href="/" className="brand" onClick={closeMenu}>
           Serenity's Keys
         </a>
@@ -35,8 +37,7 @@ const NavBar = () => {
                 <NavLink
                   to={link.to}
                   className={({ isActive }) =>
-                    
-av-link
+                    isActive ? "nav-link active" : "nav-link"
                   }
                   onClick={closeMenu}
                 >
@@ -47,7 +48,7 @@ av-link
             <li>
               <a
                 className="btn btn-primary"
-                href={${BOOKING_BASE_URL}/programs}
+                href={`${BOOKING_BASE_URL}/programs`}
                 rel="noreferrer"
               >
                 Book a Class
