@@ -33,7 +33,7 @@ const FAQ_ITEMS = [
 ];
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section>
@@ -64,3 +64,4 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
