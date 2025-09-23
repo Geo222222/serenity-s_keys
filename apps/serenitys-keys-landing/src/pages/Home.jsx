@@ -13,22 +13,22 @@ import { sendContactMessage } from "../utils/EmailService";
 const HOME_PROGRAMS = [
   {
     course: "group:3-5",
-    title: "Mini Movers Ages 3–5",
+    title: "Mini Movers Ages 3-5",
     description: "Playful stories, finger stretches, and picture-backed keys that make first typing moments magical.",
     details: ["30-minute class", "Max 3 learners", "Movement + music cues"],
     outcomes: ["Curiosity on the keyboard", "Gentle finger strength", "Early letter-location awareness"],
   },
   {
     course: "group:6-8",
-    title: "Group Ages 6–8",
+    title: "Group Ages 6-8",
     description: "Home-row mastery with games, accuracy focus, and a calm pace.",
     details: ["45-minute class", "Max 4 learners", "Teacher-led warm-up"],
     outcomes: ["Home row accuracy", "Correct finger reaches", "Positive posture"],
   },
   {
     course: "group:9-11",
-    title: "Group Ages 9–11",
-    description: "Speed building with strong accuracy—perfect for school projects.",
+    title: "Group Ages 9-11",
+    description: "Speed building with strong accuracy - perfect for school projects.",
     details: ["45-minute class", "Max 5 learners", "Weekly goal tracking"],
     outcomes: ["+3 WPM monthly", "Accuracy above 95%", "Keyboard shortcuts"],
   },
@@ -64,7 +64,7 @@ const HOW_IT_WORKS_STEPS = [
   },
   {
     title: "Coach-led adventure",
-    description: "Teachers mix movement, music, and mastery drills tuned to your child’s attention span and goals.",
+    description: "Teachers mix movement, music, and mastery drills tuned to your child's attention span and goals.",
   },
   {
     title: "Celebrate progress",
@@ -195,7 +195,7 @@ const Home = () => {
       <section>
         <div className="container ai-waitlist">
           <div>
-            <div className="section-label">AI Mentor · Coming soon</div>
+            <div className="section-label">AI Mentor Â· Coming soon</div>
             <h2 className="section-title">Serenity AI will coach alongside our teachers.</h2>
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
               We are wiring Stripe and Google Calendar right now so your automation is seamless. Join the waitlist to hear when the AI co-teacher pilot opens.

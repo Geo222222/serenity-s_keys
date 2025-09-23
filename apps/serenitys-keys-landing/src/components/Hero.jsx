@@ -6,10 +6,10 @@ const Hero = () => (
     <div className="hero-gradient" aria-hidden="true" />
     <div className="container hero-content">
       <div>
-        <span className="hero-badge">Serenity started typing at 3 · Your child can too</span>
+        <span className="hero-badge">Serenity started typing at 3 Â· Your child can too</span>
         <h1 className="section-title">Plant confident typing habits before little hands pick up bad ones.</h1>
         <p className="section-subtitle">
-          Our live Google Meet coaches guide beginners as young as age 3 through playful Typing.com adventures, then grow skills all the way to teen-level fluency—with a clear progress email after every class.
+          Our live Google Meet coaches guide beginners as young as age 3 through playful Typing.com adventures, then grow skills all the way to teen-level fluency - with a clear progress email after every class.
         </p>
         <div className="hero-actions">
           <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
@@ -40,8 +40,8 @@ const Hero = () => (
         </div>
         <div className="hero-floating-card">
           <span className="hero-floating-card__eyebrow">Next open cohort</span>
-          <strong>Mini Movers · Mon / Wed / Fri</strong>
-          <p>3:30pm CT · 30 minutes · Limit 3 kiddos</p>
+          <strong>Mini Movers Â· Mon / Wed / Fri</strong>
+          <p>3:30pm CT Â· 30 minutes Â· Limit 3 kiddos</p>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ const Policies = () => {
               <ul className="pricing-list" style={{ marginTop: "16px" }}>
                 <li>Google Meet is the classroom. Teachers are background checked.</li>
                 <li>No recordings by default. Parents can join the call at any time.</li>
-                <li>Launchpad links are unique to your family—please do not share publicly.</li>
+                <li>Launchpad links are unique to your family - please do not share publicly.</li>
               </ul>
             </article>
             <article className="step">
@@ -48,7 +48,7 @@ const Policies = () => {
             </article>
           </div>
           <p style={{ marginTop: "32px", color: "var(--color-muted)" }}>
-            Questions? Email <a href="mailto:hello@serenityskeys.com">hello@serenityskeys.com</a> and we’ll respond within one business day.
+            Questions? Email <a href="mailto:hello@serenityskeys.com">hello@serenityskeys.com</a> and we'll respond within one business day.
           </p>
         </div>
       </section>

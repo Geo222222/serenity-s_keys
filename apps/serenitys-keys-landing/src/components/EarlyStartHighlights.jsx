@@ -25,9 +25,9 @@ const EarlyStartHighlights = () => (
   <section className="alt">
     <div className="container">
       <div className="section-label">Why start this young?</div>
-      <h2 className="section-title">Serenity’s path proves early typing is a superpower</h2>
+      <h2 className="section-title">Serenity's path proves early typing is a superpower</h2>
       <p className="section-subtitle" style={{ maxWidth: "760px" }}>
-        Serenity began at age 3, and we shaped this academy around what kept her engaged—movement breaks, imaginative prompts, and gentle accountability. Now we bring that same journey to your family.
+        Serenity began at age 3, and we shaped this academy around what kept her engaged - movement breaks, imaginative prompts, and gentle accountability. Now we bring that same journey to your family.
       </p>
       <div className="card-grid cards-3">
         {HIGHLIGHTS.map((highlight) => (

@@ -27,7 +27,7 @@ const Testimonials = () => (
         {TESTIMONIALS.map((testimonial) => (
           <figure key={testimonial.name} className="testimonial-card">
             <blockquote style={{ margin: 0, fontSize: "1.05rem" }}>
-              “{testimonial.quote}”
+              "{testimonial.quote}"
             </blockquote>
             <figcaption style={{ marginTop: "18px", fontWeight: 600, color: "var(--color-muted)" }}>
               {testimonial.name}

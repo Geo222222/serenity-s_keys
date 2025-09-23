@@ -5,7 +5,7 @@ const FEATURES = [
   {
     icon: <FiTarget size={28} />,
     title: "Age-smart curriculum",
-    description: "Sensory-rich play for ages 3-5, mastery drills for big kids—all mapped lesson by lesson.",
+    description: "Sensory-rich play for ages 3-5, mastery drills for big kids - all mapped lesson by lesson.",
   },
   {
     icon: <FiUsers size={28} />,

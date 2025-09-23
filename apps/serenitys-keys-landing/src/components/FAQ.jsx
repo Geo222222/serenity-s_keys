@@ -13,7 +13,7 @@ const FAQ_ITEMS = [
   {
     question: "What ages do you support?",
     answer:
-      "Group classes start at ages 3–14. Private coaching flexes for younger siblings, accelerated teens, or specific learning needs.",
+      "Group classes start at ages 3-14. Private coaching flexes for younger siblings, accelerated teens, or specific learning needs.",
   },
   {
     question: "How will checkout and scheduling work?",
@@ -28,7 +28,7 @@ const FAQ_ITEMS = [
   {
     question: "Is this safe?",
     answer:
-      "Sessions run on Google Meet—no recordings by default. We never store Typing.com passwords and only keep essentials like name and username.",
+      "Sessions run on Google Meet - no recordings by default. We never store Typing.com passwords and only keep essentials like name and username.",
   },
 ];
 

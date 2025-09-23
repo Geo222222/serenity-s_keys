@@ -58,7 +58,7 @@ const Pricing = () => {
           <div className="section-label">Pricing</div>
           <h1 className="section-title">Simple pricing, crystal-clear value</h1>
           <p className="section-subtitle">
-            Every plan includes Launchpad access, Typing.com alignment, and post-class progress reports for parents. Stripe checkout and automated calendar invites will roll out shortly—reserve now and we will confirm within 24 hours.
+            Every plan includes Launchpad access, Typing.com alignment, and post-class progress reports for parents. Stripe checkout and automated calendar invites will roll out shortly - reserve now and we will confirm within 24 hours.
           </p>
           <div className="table-pricing">
             {PLANS.map((plan) => (
@@ -86,7 +86,7 @@ const Pricing = () => {
           <div className="section-label">Financial access</div>
           <h2 className="section-title">Scholarships & community rates</h2>
           <p className="section-subtitle" style={{ maxWidth: "720px" }}>
-            We reserve seats each month for families needing reduced pricing. Email us with "Scholarship" in the subject and we’ll set up a plan that fits.
+            We reserve seats each month for families needing reduced pricing. Email us with "Scholarship" in the subject and we'll set up a plan that fits.
           </p>
           <a className="btn btn-secondary" href="mailto:hello@serenityskeys.com">
             Contact us about scholarships

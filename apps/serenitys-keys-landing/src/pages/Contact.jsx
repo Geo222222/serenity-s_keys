@@ -40,7 +40,7 @@ const Contact = () => {
       };
       const result = await sendContactMessage(payload);
       if (result.success) {
-        setStatus({ state: "success", message: "Thanks! We’ll reply shortly." });
+        setStatus({ state: "success", message: "Thanks! We'll reply shortly." });
         setForm(INITIAL_FORM);
       } else {
         setStatus({ state: "error", message: result.message ?? "Something went wrong." });
@@ -56,9 +56,9 @@ const Contact = () => {
         <div className="container contact-grid">
           <div>
             <div className="section-label">Contact</div>
-            <h1 className="section-title">Let’s make typing class your child’s calmest 45 minutes</h1>
+            <h1 className="section-title">Let's make typing class your child's calmest 45 minutes</h1>
             <p className="section-subtitle">
-              We answer weekday emails within 24 hours. Tell us how we can help—enrollment, scholarships, or AI Mentor invites.
+              We answer weekday emails within 24 hours. Tell us how we can help - enrollment, scholarships, or AI Mentor invites.
             </p>
             <div
               style={{
@@ -72,7 +72,7 @@ const Contact = () => {
               <h3 style={{ marginTop: 0 }}>Prefer email?</h3>
               <p style={{ color: "var(--color-muted)" }}>hello@serenityskeys.com</p>
               <h4 style={{ marginBottom: 8 }}>Hours</h4>
-              <p style={{ color: "var(--color-muted)" }}>Monday–Friday · 9am–5pm Central</p>
+              <p style={{ color: "var(--color-muted)" }}>Monday-Friday Â· 9am-5pm Central</p>
             </div>
           </div>
           <form onSubmit={handleSubmit}>

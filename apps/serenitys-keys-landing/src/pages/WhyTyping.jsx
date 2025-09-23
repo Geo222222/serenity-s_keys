@@ -17,7 +17,7 @@ const REASONS = [
   {
     title: "Reduces tech frustration",
     copy:
-      "Children who know where keys live stay calm on Chromebooks—no more tears during online homework or assessments.",
+      "Children who know where keys live stay calm on Chromebooks - no more tears during online homework or assessments.",
   },
 ];
 
@@ -71,7 +71,7 @@ const WhyTyping = () => {
           <div className="section-label">Why typing early?</div>
           <h1 className="section-title">Early exposure builds lifelong digital confidence</h1>
           <p className="section-subtitle" style={{ maxWidth: "780px" }}>
-            Adults remember the hunt-and-peck struggle. Serenity's Keys removes that frustration by meeting children when their brains are ready for patterns—starting at age 3—and keeping momentum into the tween years.
+            Adults remember the hunt-and-peck struggle. Serenity's Keys removes that frustration by meeting children when their brains are ready for patterns - starting at age 3 - and keeping momentum into the tween years.
           </p>
           <div className="card-grid cards-3">
             {REASONS.map((reason) => (
@@ -129,7 +129,7 @@ const WhyTyping = () => {
       <section className="alt">
         <div className="container">
           <div className="section-label">Myths vs. reality</div>
-          <h2 className="section-title">What parents often hear—and what actually helps</h2>
+          <h2 className="section-title">What parents often hear - and what actually helps</h2>
           <div className="card-grid">
             {MYTHS.map((item) => (
               <article key={item.myth} className="accordion-item" style={{ padding: "20px" }}>
@@ -144,9 +144,9 @@ const WhyTyping = () => {
       <section>
         <div className="container">
           <div className="section-label">Next steps</div>
-          <h2 className="section-title">We’ve done the research—now let’s build their confidence</h2>
+          <h2 className="section-title">We've done the research - now let's build their confidence</h2>
           <p className="section-subtitle" style={{ maxWidth: "720px" }}>
-            Explore classes for ages 3 and up, meet the coach team, and reserve a spot. We’ll handle Stripe billing and Google Calendar invites while you cheer from the sidelines.
+            Explore classes for ages 3 and up, meet the coach team, and reserve a spot. We'll handle Stripe billing and Google Calendar invites while you cheer from the sidelines.
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>

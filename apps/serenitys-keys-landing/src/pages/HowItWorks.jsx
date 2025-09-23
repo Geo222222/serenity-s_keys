@@ -17,21 +17,21 @@ const TIMELINE = [
   },
   {
     title: "Progress email to parents",
-    description: "We capture WPM, accuracy, goals met, and at-home prompts tailored to your child’s age and energy.",
+    description: "We capture WPM, accuracy, goals met, and at-home prompts tailored to your child's age and energy.",
   },
 ];
 
 const RESPONSIBILITIES = [
   "Create a free Typing.com account for your child and share the username.",
   "Ensure a laptop/Chromebook with a full keyboard, camera, microphone, and stable internet.",
-  "For ages 3-5, plan to sit nearby for the first few classes—our coaches will cue you when it is okay to step back.",
+  "For ages 3-5, plan to sit nearby for the first few classes - our coaches will cue you when it is okay to step back.",
   "Encourage practice between classes using the drills we recommend in the progress email.",
 ];
 
 const HowItWorks = () => {
   usePageMetadata({
     title: "How It Works | Serenity's Keys",
-    description: "Book, launch, learn, and receive a progress summary—even for brand-new typists starting at age 3.",
+    description: "Book, launch, learn, and receive a progress summary - even for brand-new typists starting at age 3.",
   });
 
   return (
@@ -39,7 +39,7 @@ const HowItWorks = () => {
       <section>
         <div className="container">
           <div className="section-label">Process</div>
-          <h1 className="section-title">What happens after you press “Book a Class”</h1>
+          <h1 className="section-title">What happens after you press "Book a Class"</h1>
           <p className="section-subtitle">
             We obsess over logistics so your child can focus on typing and you can focus on celebrating progress.
           </p>
@@ -96,11 +96,11 @@ const HowItWorks = () => {
             </div>
             <div className="step">
               <h3>Minimal data</h3>
-              <p>We store your child’s first name, Typing.com username, and progress metrics—nothing else.</p>
+              <p>We store your child's first name, Typing.com username, and progress metrics - nothing else.</p>
             </div>
             <div className="step">
               <h3>Parent always looped in</h3>
-              <p>Every session triggers a progress email; you always know what happened and what’s next.</p>
+              <p>Every session triggers a progress email; you always know what happened and what's next.</p>
             </div>
           </div>
         </div>
