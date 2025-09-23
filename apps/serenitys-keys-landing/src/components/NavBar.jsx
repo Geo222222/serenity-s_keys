@@ -4,6 +4,7 @@ import { BOOKING_BASE_URL } from "../config";
 
 const links = [
   { to: "/programs", label: "Programs" },
+  { to: "/why-typing", label: "Why Typing Early" },
   { to: "/how-it-works", label: "How it Works" },
   { to: "/pricing", label: "Pricing" },
   { to: "/contact", label: "Contact" },
@@ -32,13 +33,20 @@ const NavBar = () => {
         </button>
         <nav>
           <ul className={open ? "open" : ""}>
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                onClick={closeMenu}
+              >
+                Home
+              </NavLink>
+            </li>
             {links.map((link) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
-                  className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
-                  }
+                  className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                   onClick={closeMenu}
                 >
                   {link.label}

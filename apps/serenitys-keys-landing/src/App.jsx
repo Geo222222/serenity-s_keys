@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Programs from "./pages/Programs";
 import HowItWorks from "./pages/HowItWorks";
 import Pricing from "./pages/Pricing";
+import WhyTyping from "./pages/WhyTyping";
 import Contact from "./pages/Contact";
 import Policies from "./pages/Policies";
 import ScrollToTop from "./components/ScrollToTop";
@@ -19,6 +20,7 @@ const App = () => (
       <Route path="/programs" element={<Programs />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/why-typing" element={<WhyTyping />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/policies" element={<Policies />} />
       <Route path="*" element={<Home />} />

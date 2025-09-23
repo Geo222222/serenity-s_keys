@@ -4,6 +4,7 @@ import { BOOKING_BASE_URL } from "../config";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Programs", href: "/programs" },
+  { label: "Why Typing Early", href: "/why-typing" },
   { label: "How it Works", href: "/how-it-works" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
@@ -38,6 +39,9 @@ const SharedFooter = () => (
         <ul>
           <li>
             <a href="/policies">Policies &amp; Privacy</a>
+          </li>
+          <li>
+            <a href="/why-typing#research">Research &amp; benefits</a>
           </li>
           <li>
             <a href={`${BOOKING_BASE_URL}/launchpad`}>Launchpad</a>

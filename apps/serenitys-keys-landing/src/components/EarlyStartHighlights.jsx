@@ -52,6 +52,11 @@ const EarlyStartHighlights = () => (
           </article>
         ))}
       </div>
+      <div className="hero-actions" style={{ marginTop: "32px" }}>
+        <a className="btn btn-secondary" href="/why-typing">
+          Dive deeper into benefits
+        </a>
+      </div>
     </div>
   </section>
 );
