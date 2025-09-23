@@ -1,0 +1,112 @@
+import React from "react";
+import { usePageMetadata } from "../hooks/usePageMetadata";
+import { BOOKING_BASE_URL } from "../config";
+
+const TIMELINE = [
+  {
+    title: "Book your session",
+    description: "Pick the right program in our booking portal and pay securely with Stripe. You immediately receive your Launchpad link.",
+  },
+  {
+    title: "Open the Launchpad",
+    description: "One link opens the Google Meet, Typing.com assignment, and session notes—no juggling tabs. Share it with your child and bookmark it for future classes.",
+  },
+  {
+    title: "Coach-led typing on Typing.com",
+    description: "Teachers guide warm-ups, timed sprints, and targeted drills. Students stay on Typing.com while the coach watches and cheers via Meet.",
+  },
+  {
+    title: "Progress email to parents",
+    description: "We capture WPM, accuracy, goals met, and suggested at-home practice. The email lands minutes after class ends.",
+  },
+];
+
+const RESPONSIBILITIES = [
+  "Create a free Typing.com account for your child and share the username.",
+  "Ensure a laptop/Chromebook with a full keyboard, camera, microphone, and stable internet.",
+  "Provide a quiet space—noise-cancelling headphones help younger typists focus.",
+  "Encourage practice between classes using the drills we recommend in the progress email.",
+];
+
+const HowItWorks = () => {
+  usePageMetadata({
+    title: "How It Works | Serenity's Keys",
+    description: "Book, launch, learn, and receive a progress summary. See how Serenity's Keys runs typing classes end-to-end.",
+  });
+
+  return (
+    <main id="main-content">
+      <section>
+        <div className="container">
+          <div className="section-label">Process</div>
+          <h1 className="section-title">What happens after you press “Book a Class”</h1>
+          <p className="section-subtitle">
+            We obsess over logistics so your child can focus on typing and you can focus on celebrating progress.
+          </p>
+          <div className="timeline">
+            {TIMELINE.map((item) => (
+              <div key={item.title} className="timeline-entry">
+                <h3 style={{ marginTop: 0 }}>{item.title}</h3>
+                <p style={{ color: "var(--color-muted)" }}>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="alt">
+        <div className="container contact-grid">
+          <div>
+            <div className="section-label">Launchpad snapshots</div>
+            <h2 className="section-title">Built to keep every remote class tidy</h2>
+            <p className="section-subtitle">
+              When class starts, your child opens Launchpad. It displays the Meet link, their Typing.com assignment, and coach notes. If they get disconnected, the same link brings them back instantly.
+            </p>
+            <a className="btn btn-secondary" href={${BOOKING_BASE_URL}/launchpad}>
+              Preview the Launchpad
+            </a>
+          </div>
+          <div
+            style={{
+              background: "var(--color-surface)",
+              borderRadius: "var(--radius-lg)",
+              padding: "24px",
+              border: "1px solid var(--color-border)",
+              boxShadow: "var(--shadow-sm)",
+            }}
+          >
+            <strong>Parent checklist before class</strong>
+            <ul className="pricing-list" style={{ marginTop: "16px" }}>
+              {RESPONSIBILITIES.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="container">
+          <div className="section-label">Safety & privacy</div>
+          <h2 className="section-title">Calm, private, and parent-approved</h2>
+          <div className="card-grid">
+            <div className="step">
+              <h3>Meet is never recorded</h3>
+              <p>We run cameras on for accountability, but we do not record. Coaches are background-checked educators.</p>
+            </div>
+            <div className="step">
+              <h3>Minimal data</h3>
+              <p>We store your child’s first name, Typing.com username, and progress metrics—nothing else.</p>
+            </div>
+            <div className="step">
+              <h3>Parent always looped in</h3>
+              <p>Every session triggers a progress email; you always know what happened and what’s next.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default HowItWorks;
