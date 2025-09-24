@@ -14,7 +14,7 @@ const CTASection = () => (
           <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
             Choose a class time
           </a>
-          <a className="btn btn-secondary" href="mailto:hello@serenityskeys.com">
+          <a className="btn btn-secondary" href="mailto:hello@serenitykeys.com">
             Ask a question
           </a>
         </div>

@@ -70,7 +70,7 @@ const Contact = () => {
               }}
             >
               <h3 style={{ marginTop: 0 }}>Prefer email?</h3>
-              <p style={{ color: "var(--color-muted)" }}>hello@serenityskeys.com</p>
+              <p style={{ color: "var(--color-muted)" }}>hello@serenitykeys.com</p>
               <h4 style={{ marginBottom: 8 }}>Hours</h4>
               <p style={{ color: "var(--color-muted)" }}>Monday-Friday | 9am-5pm Central</p>
             </div>
@@ -117,15 +117,26 @@ const Contact = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary" disabled={status.state === "loading"}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={
+                status.state === "loading" ||
+                !form.parent_name ||
+                !form.parent_email ||
+                !form.message
+              }
+            >
               {status.state === "loading" ? "Sending..." : "Send message"}
             </button>
-            {status.state === "success" && (
-              <div className="alert alert-success">Got it -- we'll reply within 24 hours.</div>
-            )}
-            {status.state === "error" && (
-              <div className="alert alert-error">{status.message}</div>
-            )}
+            <div aria-live="polite" style={{ minHeight: 24 }}>
+              {status.state === "success" && (
+                <div className="alert alert-success">Got it -- we'll reply within 24 hours.</div>
+              )}
+              {status.state === "error" && (
+                <div className="alert alert-error">{status.message}</div>
+              )}
+            </div>
           </form>
         </div>
       </section>

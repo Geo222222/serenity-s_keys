@@ -17,12 +17,15 @@ const Roadmap = () => {
           <p className="section-subtitle">
             Follow the week-by-week milestones we share with families. Download the PDF to keep practice aligned between classes.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a className="btn btn-primary" href="/roadmap.pdf" target="_blank" rel="noopener">
               Download the PDF
             </a>
             <a className="btn btn-secondary" href={`${BOOKING_BASE_URL}/programs`}>
               Browse programs
+            </a>
+            <a className="btn btn-tertiary" href="/try-typing">
+              Try the Typing Playground
             </a>
           </div>
           <div

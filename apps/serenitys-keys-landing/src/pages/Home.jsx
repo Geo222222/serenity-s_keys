@@ -23,14 +23,14 @@ const HOME_PROGRAMS = [
   },
   {
     course: "group:6-8",
-    title: "Group Ages 6-8",
+  title: "Key Explorers (Ages 6–8)",
     description: "Accuracy first - no more hunt and peck.",
     details: ["45 minute class", "Max 4 learners", "Teacher-led warm up"],
     outcomes: ["Home row mastery", "Correct finger reaches", "Positive posture"],
   },
   {
     course: "group:9-11",
-    title: "Group Ages 9-11",
+  title: "Home Row Heroes (Ages 9–11)",
     description: "Speed with strong accuracy - confident for school projects.",
     details: ["45 minute class", "Max 5 learners", "Weekly goal tracking"],
     outcomes: ["+3 WPM monthly", "Accuracy above 95%", "Keyboard shortcuts"],
@@ -89,7 +89,7 @@ const Home = () => {
       title: "Live typing classes kids love. Progress parents can see.",
       description: "Serenity's Keys blends Typing.com adventures with warm coaching for ages 3 and up.",
       image: "/og-image.png",
-      url: "https://serenityskeys.com/",
+  url: "https://serenitykeys.com/",
     },
   });
 
