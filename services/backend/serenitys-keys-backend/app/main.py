@@ -25,6 +25,10 @@ from fastapi import (
     UploadFile,
     status,
 )
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+from .exceptions import BaseAPIException, ResourceNotFound, ValidationError, DependencyError, ResourceConflict
+from .security import AuthError, JWT_ALGORITHM, jwt
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
@@ -80,19 +84,57 @@ if sentry_dsn:
 
 app = FastAPI(title="Serenity's Keys Backend", version="0.2.0")
 
-limiter = Limiter(key_func=get_remote_address)
+# Configure rate limiting with different rules for various endpoints
+def get_client_key(request: Request) -> str:
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0]
+    return get_remote_address(request)
+
+limiter = Limiter(key_func=get_client_key)
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
-app.add_exception_handler(
-    RateLimitExceeded, lambda request, exc: PlainTextResponse("Too Many Requests", status_code=429)
-)
+
+# Custom rate limit handler with more informative response
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        content={
+            "error": True,
+            "code": "RATE_LIMIT_EXCEEDED",
+            "message": "Too many requests. Please try again later.",
+            "details": {
+                "retry_after": exc.retry_after if hasattr(exc, "retry_after") else None
+            }
+        },
+        headers={"Retry-After": str(exc.retry_after) if hasattr(exc, "retry_after") else "60"}
+    )
+
+# CORS middleware with secure defaults
+allow_methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+allow_headers = [
+    "Accept",
+    "Authorization",
+    "Content-Type",
+    "X-Request-ID",
+    "X-CSRF-Token",
+    "Stripe-Signature"
+]
+
+if settings.app_env.lower() in {"dev", "development"}:
+    # More permissive CORS in development
+    allow_methods = ["*"]
+    allow_headers = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=allow_methods,
+    allow_headers=allow_headers,
+    expose_headers=["X-Request-ID"],
+    max_age=3600  # Cache preflight requests for 1 hour
 )
 
 @app.middleware("http")
@@ -101,6 +143,68 @@ async def add_request_id(request: Request, call_next):
     response: Response = await call_next(request)
     response.headers["x-request-id"] = request_id
     return response
+
+@app.middleware("http")
+async def error_handling_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except BaseAPIException as exc:
+        logger.error(
+            "API Error: %s",
+            exc.detail,
+            extra={
+                "error_code": exc.error_code,
+                "path": request.url.path,
+                "extra": exc.extra
+            }
+        )
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": True,
+                "code": exc.error_code,
+                "message": exc.detail,
+                "details": exc.extra
+            }
+        )
+    except HTTPException as exc:
+        logger.error(
+            "HTTP Error: %s",
+            exc.detail,
+            extra={"path": request.url.path}
+        )
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": True,
+                "code": "HTTP_ERROR",
+                "message": exc.detail
+            }
+        )
+    except Exception as exc:
+        logger.exception(
+            "Unhandled error: %s",
+            str(exc),
+            extra={"path": request.url.path}
+        )
+        if settings.app_env.lower() in {"dev", "development"}:
+            return JSONResponse(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                content={
+                    "error": True,
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": str(exc),
+                    "type": type(exc).__name__
+                }
+            )
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "error": True,
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "An unexpected error occurred"
+            }
+        )
 
 
 @app.on_event("startup")
@@ -112,9 +216,51 @@ async def on_startup() -> None:
         start_scheduler(app)
 
 
+async def check_db_connection(db: AsyncSession) -> bool:
+    try:
+        # Test query to verify database connection
+        await db.execute(select(func.now()))
+        return True
+    except Exception as e:
+        logger.error(f"Database health check failed: {str(e)}")
+        return False
+
+async def check_dependencies() -> dict[str, dict[str, Any]]:
+    dependencies = {
+        "stripe": {
+            "status": "ok" if stripe else "not_configured",
+            "version": stripe.__version__ if stripe else None
+        },
+        "sentry": {
+            "status": "ok" if sentry_dsn else "not_configured"
+        },
+        "email": {
+            "status": "ok" if settings.from_email else "not_configured"
+        },
+        "google_calendar": {
+            "status": "ok" if settings.google_calendar_id else "not_configured"
+        }
+    }
+    return dependencies
+
 @app.get("/health")
-async def healthcheck() -> dict[str, str]:
-    return {"status": "ok"}
+async def healthcheck(db: AsyncSession = Depends(get_session)) -> dict[str, Any]:
+    db_healthy = await check_db_connection(db)
+    deps = await check_dependencies()
+    
+    status = "ok" if db_healthy and all(d["status"] == "ok" for d in deps.values()) else "degraded"
+    
+    return {
+        "status": status,
+        "timestamp": datetime.utcnow().isoformat(),
+        "version": app.version,
+        "environment": settings.app_env,
+        "database": {
+            "status": "ok" if db_healthy else "error",
+            "type": "postgresql"
+        },
+        "dependencies": deps
+    }
 
 
 @app.post("/api/availability", response_model=list[SessionOut])
@@ -169,7 +315,7 @@ async def availability(
 async def get_session_detail(session_id: int, db: AsyncSession = Depends(get_session)) -> SessionOut:
     session_obj = await db.get(Session, session_id)
     if not session_obj:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session not found")
+        raise ResourceNotFound("Session", session_id)
 
     enrollment_count = await _count_enrollments(db, session_obj.id)
     seats_available = max(session_obj.capacity - enrollment_count, 0)
@@ -237,6 +383,7 @@ async def upsert_profile(
 
 
 @app.post("/api/booking/checkout", response_model=CheckoutOut)
+@limiter.limit("30/hour")
 async def booking_checkout(
     payload: CheckoutIn,
     db: AsyncSession = Depends(get_session),
@@ -351,6 +498,7 @@ async def stripe_webhook(request: Request, db: AsyncSession = Depends(get_sessio
 
 
 @app.post("/api/contact")
+@limiter.limit("5/minute")
 async def submit_contact_form(payload: ContactIn) -> dict[str, str]:
     recipient = settings.contact_inbox_email or settings.from_email
     if not recipient:
@@ -458,11 +606,21 @@ async def list_student_metrics(
 
 
 @app.post("/api/admin/login")
+@limiter.limit("5/minute")
 async def admin_login(body: AdminLoginIn) -> dict[str, Any]:
     if body.password != settings.admin_api_token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
+        raise AuthError("Invalid credentials")
+    
     token = make_admin_token()
-    return {"token": token, "expires_in": 3600}
+    claims = jwt.decode(token, settings.admin_jwt_secret, algorithms=[JWT_ALGORITHM])
+    
+    return {
+        "token": token,
+        "token_type": "Bearer",
+        "expires_in": 3600,
+        "expires_at": claims["exp"],
+        "roles": claims["roles"]
+    }
 
 
 
@@ -471,7 +629,7 @@ async def admin_login(body: AdminLoginIn) -> dict[str, Any]:
 @app.get("/api/admin/sessions")
 async def admin_list_sessions(
     db: AsyncSession = Depends(get_session),
-    _: dict[str, Any] = Depends(require_admin),
+    claims: dict[str, Any] = Depends(require_admin),
 ) -> list[dict[str, Any]]:
     now = datetime.utcnow()
     stmt = (
