@@ -12,6 +12,7 @@ def confirmation_email_html(
     when: datetime,
     meet_link: str,
     launchpad_url: str,
+    typing_class_link: Optional[str] = None,
     ics_link: Optional[str] = None,
 ) -> str:
     date_str = when.strftime("%A, %B %d @ %I:%M %p")
@@ -31,7 +32,10 @@ def confirmation_email_html(
       </ul>
       <p><a href="{meet_link}" style="background:#0a7;color:#fff;padding:10px 14px;border-radius:6px;text-decoration:none">Join Google Meet</a></p>
       {add_to_calendar_html}
-      <p>Please log into Typing.com at least once before class so it opens instantly when you use the Launchpad.</p>\n      <p>Before class, open our Launchpad (Meet + Typing.com in one place):</p>
+      <p><strong>Important: Register for Typing.com</strong></p>
+      <p>Please register your account on Typing.com using this class link:</p>
+      <p><a href="{typing_class_link}" style="color:#2563eb">{typing_class_link}</a></p>
+      <p>Before class, open our Launchpad (Meet + Typing.com in one place):</p>
       <p><a href="{launchpad_url}">{launchpad_url}</a></p>
       <hr/>
       <p style="color:#666;font-size:13px">Tip: Please log in to Typing.com beforehand so it opens instantly from the Launchpad.</p>

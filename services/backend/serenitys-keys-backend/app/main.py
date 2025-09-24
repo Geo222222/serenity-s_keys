@@ -25,6 +25,8 @@ from fastapi import (
     UploadFile,
     status,
 )
+
+from .constants import PROGRAMS
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from .exceptions import BaseAPIException, ResourceNotFound, ValidationError, DependencyError, ResourceConflict
@@ -626,6 +628,33 @@ async def admin_login(body: AdminLoginIn) -> dict[str, Any]:
 
 
 
+@app.get("/api/admin/typing-links")
+async def admin_list_typing_links(
+    _: dict[str, Any] = Depends(require_admin),
+) -> dict[str, str]:
+    """Get the current typing.com class links configuration."""
+    return settings.typing_class_links
+
+@app.post("/api/admin/typing-links")
+async def admin_update_typing_links(
+    links: dict[str, str],
+    _: dict[str, Any] = Depends(require_admin),
+) -> dict[str, str]:
+    """Update the typing.com class links configuration."""
+    # Validate the course IDs
+    valid_courses = {p["id"] for p in PROGRAMS}
+    invalid_courses = set(links.keys()) - valid_courses
+    if invalid_courses:
+        raise ValidationError(
+            f"Invalid course IDs: {', '.join(invalid_courses)}",
+            extra={"valid_courses": list(valid_courses)}
+        )
+    
+    # Update the configuration
+    settings.typing_class_links.clear()
+    settings.typing_class_links.update(links)
+    return settings.typing_class_links
+
 @app.get("/api/admin/sessions")
 async def admin_list_sessions(
     db: AsyncSession = Depends(get_session),
@@ -816,12 +845,15 @@ async def _handle_checkout_completed(event_data: dict[str, Any], db: AsyncSessio
     )
     ics_link = ics_data_url(ics_content)
 
+    typing_class_link = settings.typing_class_links.get(session_obj.course)
+
     html = confirmation_email_html(
         parent_name=parent.name if parent else None,
         child_name=student.name if student else None,
         when=session_obj.start_ts,
         meet_link=meet_link,
         launchpad_url=launchpad_url,
+        typing_class_link=typing_class_link,
         ics_link=ics_link,
     )
 

@@ -48,6 +48,16 @@ class Settings(BaseSettings):
     admin_api_token: str = Field(default="dev", alias="ADMIN_API_TOKEN")
     admin_jwt_secret: str = Field(default="change-me", alias="ADMIN_JWT_SECRET")
     sentry_dsn: str = Field(default="", alias="SENTRY_DSN")
+    typing_class_links: dict[str, str] = Field(
+        default={
+            "group:3-5": "https://www.typing.com/join#68D40AEA3DA1F",
+            "group:6-8": "https://www.typing.com/join#68D40AEA3DA1F",
+            "group:9-11": "https://www.typing.com/join#68D40AEA3DA1F",
+            "group:12-14": "https://www.typing.com/join#68D40AEA3DA1F",
+            "private:all": "https://www.typing.com/join#68D40AEA3DA1F"
+        },
+        alias="TYPING_CLASS_LINKS"
+    )
 
     @property
     def cors_origins_list(self) -> List[str]:
