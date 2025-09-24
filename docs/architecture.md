@@ -9,7 +9,7 @@ Booking Portal (Next.js App Router)
      |
 FastAPI Backend
      +-- Google Calendar (service account; Meet links, future automation)
-     +-- Stripe (Checkout handoff, webhooks – pending live keys)
+     +-- Stripe (Checkout handoff, webhooks ï¿½ pending live keys)
      +-- Typing.com (CSV uploads today, API integration later)
      +-- Postgres (planned production datastore; SQLite in dev)
      +-- Redis / queue (planned for reminders, waitlists)
@@ -33,9 +33,10 @@ Notifications (Resend email today, Twilio SMS optional later)
 - Depends on backend JWT auth and `NEXT_PUBLIC_API_BASE_URL`.
 
 ### Backend (`services/backend/serenitys-keys-backend`)
-- FastAPI scaffold with SQLAlchemy models, Stripe/Google/Resend integration stubs, and Uvicorn dev setup.
+- FastAPI application with SQLAlchemy models, complete Stripe/Google Calendar/email integrations.
+- Features include session management, booking flow, admin tools, and metrics import.
 - Uses SQLite for local work; migrations and Postgres configuration live in `infra/db`.
-- Exposes placeholders for availability, contact capture, enrollments, and metrics ingestion.
+- Comprehensive API surface for availability, bookings, payments, and student metrics.
 
 ### Docs & Infra (`docs/`, `infra/`)
 - Architecture, roadmap, privacy, and prompt guidance now reflect the latest site content and upcoming milestones.
@@ -65,11 +66,11 @@ Roles include admin, coach, and parent once auth is in place.
 
 ## API surface (in development)
 
-- `POST /api/contact` – landing site contact + waitlist capture (live).
-- `POST /api/typing/import` – CSV upload for Typing.com exports (admin).
-- `POST /api/booking/availability` – fetch open sessions (stubbed).
-- `POST /api/booking/checkout` – Stripe checkout session provisioning (stubbed).
-- `POST /api/booking/confirm` – webhook to finalize enrollment (planned).
-- `GET /api/parent/dashboard` – metrics + schedule aggregation (planned).
+- `POST /api/contact` ï¿½ landing site contact + waitlist capture (live).
+- `POST /api/typing/import` ï¿½ CSV upload for Typing.com exports (admin).
+- `POST /api/booking/availability` ï¿½ fetch open sessions (stubbed).
+- `POST /api/booking/checkout` ï¿½ Stripe checkout session provisioning (stubbed).
+- `POST /api/booking/confirm` ï¿½ webhook to finalize enrollment (planned).
+- `GET /api/parent/dashboard` ï¿½ metrics + schedule aggregation (planned).
 
 Keep clients thin by consuming generated TypeScript/Python SDKs once the backend contracts solidify.
