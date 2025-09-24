@@ -6,6 +6,9 @@ import Testimonials from "../components/Testimonials";
 import TrustBar from "../components/TrustBar";
 import CTASection from "../components/CTASection";
 import EarlyStartHighlights from "../components/EarlyStartHighlights";
+import CoachBio from "../components/CoachBio";
+import RoutinePanel from "../components/RoutinePanel";
+import TestimonialStrip from "../components/TestimonialStrip";
 import { usePageMetadata } from "../hooks/usePageMetadata";
 import { BOOKING_BASE_URL } from "../config";
 import { sendContactMessage } from "../utils/EmailService";
@@ -14,69 +17,74 @@ const HOME_PROGRAMS = [
   {
     course: "group:3-5",
     title: "Mini Movers Ages 3-5",
-    description: "Playful stories, finger stretches, and picture-backed keys that make first typing moments magical.",
-    details: ["30-minute class", "Max 3 learners", "Movement + music cues"],
-    outcomes: ["Curiosity on the keyboard", "Gentle finger strength", "Early letter-location awareness"],
+    description: "Short, playful sessions so little hands build good habits.",
+    details: ["30 minute class", "Max 3 learners", "Movement and music cues"],
+    outcomes: ["Curiosity on the keyboard", "Gentle finger strength", "Friendly coach support"],
   },
   {
     course: "group:6-8",
     title: "Group Ages 6-8",
-    description: "Home-row mastery with games, accuracy focus, and a calm pace.",
-    details: ["45-minute class", "Max 4 learners", "Teacher-led warm-up"],
-    outcomes: ["Home row accuracy", "Correct finger reaches", "Positive posture"],
+    description: "Accuracy first - no more hunt and peck.",
+    details: ["45 minute class", "Max 4 learners", "Teacher-led warm up"],
+    outcomes: ["Home row mastery", "Correct finger reaches", "Positive posture"],
   },
   {
     course: "group:9-11",
     title: "Group Ages 9-11",
-    description: "Speed building with strong accuracy - perfect for school projects.",
-    details: ["45-minute class", "Max 5 learners", "Weekly goal tracking"],
+    description: "Speed with strong accuracy - confident for school projects.",
+    details: ["45 minute class", "Max 5 learners", "Weekly goal tracking"],
     outcomes: ["+3 WPM monthly", "Accuracy above 95%", "Keyboard shortcuts"],
   },
 ];
 
 const PROOF_POINTS = [
   {
-    stat: '150+',
-    label: 'families coached so far',
-    detail: 'Real parent feedback informs every drill, email, and Launchpad enhancement we ship.',
+    stat: "150+",
+    label: "families coached so far",
+    detail: "Parent feedback shapes every drill, email, and Launchpad tweak we make.",
   },
   {
-    stat: '92%',
-    label: 'kids ask to come back',
-    detail: 'Small wins + playful coaching keeps younger learners excited for the next session.',
+    stat: "92%",
+    label: "kids ask to come back",
+    detail: "Small wins and gentle pacing keep learners excited for the next session.",
   },
   {
-    stat: '4.9/5',
-    label: 'parent satisfaction',
-    detail: 'Parents love seeing instant confirmations, consistent Meet links, and transparent metrics.',
+    stat: "4.9/5",
+    label: "parent satisfaction",
+    detail: "Parents love instant confirmations, dependable Meet links, and transparent metrics.",
   },
 ];
 
-
 const HOW_IT_WORKS_STEPS = [
   {
-    title: "Pick a class",
-    description: "Choose an age-fit session, complete Stripe checkout (setup in progress), and secure your seat instantly.",
+    title: "Book a spot",
+    copy: "Choose the age group that fits. Checkout takes two minutes.",
   },
   {
-    title: "Receive Launchpad",
-    description: "We drop a Google Calendar invite with Meet + Typing.com links so you and your child are one click away.",
+    title: "Open the Launchpad",
+    copy: "One link gives you Google Meet, Typing.com, and coach notes.",
   },
   {
-    title: "Coach-led adventure",
-    description: "Teachers mix movement, music, and mastery drills tuned to your child's attention span and goals.",
+    title: "30 minute class",
+    copy: "Coach DJ keeps things calm with missions, wiggle breaks, and cheers.",
   },
   {
-    title: "Celebrate progress",
-    description: "Parents get WPM, accuracy, coach notes, and at-home practice ideas minutes after class.",
+    title: "Progress note",
+    copy: "You get a short email with wins and next steps the same day.",
   },
+];
+
+const FIRST_CLASS_CHECKLIST = [
+  "Create a free Typing.com account and share the username.",
+  "Laptop or Chromebook with camera and mic (no special software).",
+  "A comfy chair, small snack, and a quiet-ish corner.",
 ];
 
 const Home = () => {
   usePageMetadata({
     title: "Serenity's Keys | Live Typing Classes for Kids 3+",
     description:
-      "Live Google Meet typing classes starting at age 3. Nurturing coaches, Stripe-ready checkout, and progress emails parents trust.",
+      "Live Google Meet typing classes starting at age 3. Nurturing coaches, Stripe checkout, and progress emails parents trust.",
     openGraph: {
       title: "Live typing classes kids love. Progress parents can see.",
       description: "Serenity's Keys blends Typing.com adventures with warm coaching for ages 3 and up.",
@@ -87,6 +95,7 @@ const Home = () => {
 
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistStatus, setWaitlistStatus] = useState({ state: "idle", message: "" });
+  const privateUrl = `${BOOKING_BASE_URL}/programs?${new URLSearchParams({ course: "private" })}`;
 
   const handleWaitlistSubmit = async (event) => {
     event.preventDefault();
@@ -118,6 +127,9 @@ const Home = () => {
   return (
     <main id="main-content">
       <Hero />
+      <TrustBar />
+      <TestimonialStrip />
+      <CoachBio />
       <FeatureRow />
       <EarlyStartHighlights />
 
@@ -127,67 +139,66 @@ const Home = () => {
           <h2 className="section-title">Built for parents who want calm, joyful progress</h2>
           <div className="proof-grid">
             {PROOF_POINTS.map((point) => (
-              <article key={point.label} className="proof-card">
+              <article key={point.label} className="proof-card card">
                 <strong>{point.stat}</strong>
                 <div>
-                  <h3 style={{ margin: 0 }}>{point.label}</h3>
-                  <p style={{ margin: 0, color: "var(--color-muted)" }}>{point.detail}</p>
+                  <h3>{point.label}</h3>
+                  <p>{point.detail}</p>
                 </div>
               </article>
             ))}
           </div>
+          <a className="roadmap-highlight" href="/roadmap.pdf" target="_blank" rel="noopener">
+            [PDF] Parents love our 12-Week Roadmap
+          </a>
+        </div>
+      </section>
+
+      <section className="alt">
+        <div className="container programs-grid">
+          <div className="card-grid">
+            {HOME_PROGRAMS.map((program) => (
+              <ProgramCard key={program.course} {...program} />
+            ))}
+            <div className="card program-extra">
+              <div className="badge">Private coaching</div>
+              <h3>Custom goals for siblings or neurodiverse learners.</h3>
+              <p>
+                1-on-1 sessions with personalized pacing, optional coding modules, and weekly parent syncs.
+              </p>
+              <a className="btn btn-primary" href={privateUrl}>
+                View private options
+              </a>
+            </div>
+          </div>
+          <RoutinePanel />
         </div>
       </section>
 
       <section>
         <div className="container">
           <div className="section-label">How it works</div>
-          <h2 className="section-title">Launch, learn, and see the progress in one link</h2>
-          <div className="step-list">
+          <h2 className="section-title">Parents stay relaxed, kids stay engaged</h2>
+          <div className="step-grid">
             {HOW_IT_WORKS_STEPS.map((step) => (
-              <div key={step.title} className="step">
-                <h3 style={{ marginTop: 0 }}>{step.title}</h3>
-                <p style={{ marginBottom: 0, color: "var(--color-muted)" }}>{step.description}</p>
-              </div>
+              <article key={step.title} className="card step-card">
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="alt">
-        <div className="container">
-          <div className="section-label">Age groups</div>
-          <h2 className="section-title">Programs tuned to the way kids actually learn</h2>
-          <div className="card-grid">
-            {HOME_PROGRAMS.map((program) => (
-              <ProgramCard key={program.course} {...program} />
-            ))}
-            <div
-              style={{
-                background: "var(--color-surface)",
-                borderRadius: "var(--radius-lg)",
-                padding: "28px",
-                border: "1px solid var(--color-border)",
-                boxShadow: "var(--shadow-sm)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "18px",
-              }}
-            >
-              <div className="badge">private:all</div>
-              <h3 style={{ margin: 0 }}>Private coaching</h3>
-              <p style={{ margin: 0, color: "var(--color-muted)" }}>
-                One-on-one sessions for siblings, neurodiverse learners, or families who want a custom mix of music, coding, and speed drills.
-              </p>
-              <ul className="pricing-list">
-                <li>Flexible schedule</li>
-                <li>Personalized drills</li>
-                <li>Weekly parent check-ins</li>
-              </ul>
-              <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs?course=${encodeURIComponent("private:all")}`}>
-                View private options
-              </a>
-            </div>
+          <aside className="card checklist-card">
+            <h3>First class checklist</h3>
+            <ul>
+              {FIRST_CLASS_CHECKLIST.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
+          <div className="hero-actions" style={{ marginTop: 24 }}>
+            <a className="btn btn-secondary" href="/try-typing">
+              Try the Typing Playground
+            </a>
           </div>
         </div>
       </section>
@@ -195,10 +206,10 @@ const Home = () => {
       <section>
         <div className="container ai-waitlist">
           <div>
-            <div className="section-label">AI Mentor · Coming soon</div>
+            <div className="section-label">AI Mentor - Coming soon</div>
             <h2 className="section-title">Serenity AI will coach alongside our teachers.</h2>
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
-              We are wiring Stripe and Google Calendar right now so your automation is seamless. Join the waitlist to hear when the AI co-teacher pilot opens.
+              Coming soon: a friendly AI mentor that cheers your child on between classes and reminds them to practice - like a calm coach in your corner.
             </p>
           </div>
           <form onSubmit={handleWaitlistSubmit}>
@@ -224,15 +235,11 @@ const Home = () => {
       </section>
 
       <Testimonials />
-      <TrustBar />
       <CTASection />
     </main>
   );
 };
 
 export default Home;
-
-
-
 
 

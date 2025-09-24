@@ -9,6 +9,7 @@ const PLANS = [
     price: "$35",
     cadence: "per 30-minute class",
     description: "Sensory-rich adventures that build familiarity with letters and gentle motor control.",
+    fit: "Preschool readiness",
     items: [
       "Live coach with early-childhood training",
       "Movement and music resets every 7 minutes",
@@ -22,6 +23,7 @@ const PLANS = [
     price: "$45",
     cadence: "per 45-minute class",
     description: "Structured drills to boost speed, accuracy, and confidence for elementary learners.",
+    fit: "Elementary confidence",
     items: [
       "Max 5 learners per class",
       "Typing.com mastery missions",
@@ -35,6 +37,7 @@ const PLANS = [
     price: "$65",
     cadence: "per 45-minute class",
     description: "One-on-one coaching tailored to siblings, neurodiverse learners, or accelerated goals.",
+    fit: "Neurodiverse or custom goals",
     items: [
       "Flexible scheduling",
       "Custom curriculum",
@@ -65,6 +68,7 @@ const Pricing = () => {
               <div key={plan.name} className="pricing-card">
                 <div className="badge">{plan.cadence}</div>
                 <h3 style={{ margin: "8px 0" }}>{plan.name}</h3>
+                <p className="plan-fit">Best for: {plan.fit}</p>
                 <strong style={{ fontSize: "2rem" }}>{plan.price}</strong>
                 <p style={{ color: "var(--color-muted)" }}>{plan.description}</p>
                 <ul className="pricing-list">

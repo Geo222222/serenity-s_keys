@@ -41,19 +41,22 @@ const MYTHS = [
 
 const SUCCESS_POINTS = [
   {
+    icon: "[focus]",
     stat: "2.5x",
     label: "more likely to enjoy writing assignments",
-    detail: "Students who type fluidly report more confidence sharing ideas in class.",
+    detail: "Typing keeps pace with their ideas so writing feels fun, not frustrating.",
   },
   {
+    icon: "[books]",
     stat: "28%",
     label: "increase in reading comprehension",
-    detail: "Keyboard familiarity lets kids focus on content, not key hunting.",
+    detail: "Keyboard comfort frees brain space for stories, boosting focus & planning skills.",
   },
   {
+    icon: "[clock]",
     stat: "10 mins",
-    label: "off parents' nightly homework load",
-    detail: "Kids who type faster finish digital worksheets sooner and with less frustration.",
+    label: "saved on nightly homework",
+    detail: "Faster typing shortens Chromebook time so evenings feel calmer for everyone.",
   },
 ];
 
@@ -96,30 +99,19 @@ const WhyTyping = () => {
       </section>
 
       <EarlyStartHighlights />
-
       <section id="research">
         <div className="container">
           <div className="section-label">What the research shows</div>
-          <h2 className="section-title">Typing early supports language, executive function, and confidence</h2>
+          <h2 className="section-title">Typing early supports language, focus & planning skills, and confidence</h2>
           <div className="card-grid cards-3">
             {SUCCESS_POINTS.map((point) => (
-              <article
-                key={point.label}
-                style={{
-                  background: "var(--color-surface)",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "28px",
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-sm)",
-                  display: "grid",
-                  gap: "12px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-                  <span style={{ fontSize: "2.4rem", fontWeight: 700, color: "var(--color-primary)" }}>{point.stat}</span>
-                  <span style={{ color: "var(--color-muted)", fontWeight: 600 }}>{point.label}</span>
+              <article key={point.label} className="stat-card">
+                <span className="stat-icon" aria-hidden="true">{point.icon}</span>
+                <div className="stat-copy">
+                  <div className="stat-value">{point.stat}</div>
+                  <div className="stat-label">{point.label}</div>
                 </div>
-                <p style={{ margin: 0, color: "var(--color-muted)" }}>{point.detail}</p>
+                <p className="stat-detail">{point.detail}</p>
               </article>
             ))}
           </div>
@@ -152,6 +144,9 @@ const WhyTyping = () => {
             <a className="btn btn-primary" href={`${BOOKING_BASE_URL}/programs`}>
               Browse programs
             </a>
+            <a className="btn btn-secondary" href="/roadmap.pdf" target="_blank" rel="noopener">
+              See the 12-Week Roadmap
+            </a>
             <a className="btn btn-secondary" href="/contact">
               Talk to a coach
             </a>
@@ -163,3 +158,5 @@ const WhyTyping = () => {
 };
 
 export default WhyTyping;
+
+

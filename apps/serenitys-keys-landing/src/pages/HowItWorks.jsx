@@ -17,7 +17,14 @@ const TIMELINE = [
   },
   {
     title: "Progress email to parents",
-    description: "We capture WPM, accuracy, goals met, and at-home prompts tailored to your child's age and energy.",
+    description: (
+      <>
+        We capture WPM, accuracy, goals met, and at-home prompts tailored to your child's age and energy.{' '}
+        <a href="/roadmap.pdf" target="_blank" rel="noopener">
+          Track growth with our 12-Week Progress Roadmap.
+        </a>
+      </>
+    ),
   },
 ];
 
@@ -62,6 +69,11 @@ const HowItWorks = () => {
             <p className="section-subtitle">
               When class starts, your child opens Launchpad. It displays the Meet link, their Typing.com assignment, and coach notes. If they get disconnected, the same link brings them back instantly.
             </p>
+            <div className="launchpad-gallery">
+              <img src="/images/launchpad-1.png" alt="Launchpad showing Meet link, Typing.com, and coach notes" />
+              <img src="/images/launchpad-2.png" alt="Launchpad assignment list placeholder" />
+              <img src="/images/launchpad-3.png" alt="Example progress email preview" />
+            </div>
             <a className="btn btn-secondary" href={`${BOOKING_BASE_URL}/launchpad`}>
               Preview the Launchpad
             </a>

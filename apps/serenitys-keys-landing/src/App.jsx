@@ -9,6 +9,8 @@ import Pricing from "./pages/Pricing";
 import WhyTyping from "./pages/WhyTyping";
 import Contact from "./pages/Contact";
 import Policies from "./pages/Policies";
+import TryTyping from "./pages/TryTyping";
+import Roadmap from "./pages/Roadmap";
 import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => (
@@ -23,6 +25,8 @@ const App = () => (
       <Route path="/why-typing" element={<WhyTyping />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/policies" element={<Policies />} />
+      <Route path="/roadmap" element={<Roadmap />} />
+      <Route path="/try-typing" element={<TryTyping />} />
       <Route path="*" element={<Home />} />
     </Routes>
     <SharedFooter />
@@ -30,3 +34,4 @@ const App = () => (
 );
 
 export default App;
+

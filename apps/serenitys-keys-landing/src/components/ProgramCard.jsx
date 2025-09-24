@@ -1,7 +1,7 @@
 import React from "react";
 import { BOOKING_BASE_URL } from "../config";
 
-const ProgramCard = ({ course, title, description, details, outcomes }) => (
+const ProgramCard = ({ course, title, description, details, outcomes, benchmarks = [] }) => (
   <div
     style={{
       background: "var(--color-surface)",
@@ -17,6 +17,13 @@ const ProgramCard = ({ course, title, description, details, outcomes }) => (
     <div className="badge">{course}</div>
     <h3 style={{ margin: "0" }}>{title}</h3>
     <p style={{ margin: 0, color: "var(--color-muted)" }}>{description}</p>
+    {benchmarks.length > 0 && (
+      <div className="pill-row">
+        {benchmarks.map((item) => (
+          <span key={item} className="pill">{item}</span>
+        ))}
+      </div>
+    )}
     <ul className="pricing-list">
       {details.map((item) => (
         <li key={item}>{item}</li>

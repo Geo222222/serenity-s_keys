@@ -13,6 +13,9 @@ const Policies = () => {
         <div className="container">
           <div className="section-label">Policies</div>
           <h1 className="section-title">Plain-English policies for families</h1>
+          <div className="alert alert-info">
+            <strong>Quick answers:</strong> 24-hr cancel = full credit | No recordings | Minimal data kept.
+          </div>
           <div className="card-grid">
             <article className="step">
               <h3>Refunds & rescheduling</h3>
