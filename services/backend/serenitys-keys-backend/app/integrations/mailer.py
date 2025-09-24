@@ -24,7 +24,7 @@ async def send_email(to: str, subject: str, html: str) -> bool:
         return True
 
     payload: dict[str, Any] = {
-        "from": settings.from_email or "no-reply@serenityskeys.com",
+    "from": settings.from_email or "no-reply@serenitykeys.com",
         "to": [to],
         "subject": subject,
         "html": html,
