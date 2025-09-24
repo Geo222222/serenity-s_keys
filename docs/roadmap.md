@@ -1,40 +1,47 @@
 # Delivery Roadmap
 
-## Phase 0 – Foundations (Day 1-2)
-- Register service accounts (Google Workspace, Stripe, Resend/SendGrid, Twilio if SMS).
-- Provision Postgres + Redis; capture schema in `infra/db` migrations.
-- Define Auth (Clerk/Auth.js or custom) with roles: admin, coach, parent.
-- Stand up FastAPI/NestJS skeleton with health checks and database connectivity.
+| Phase | Scope | Timeline | Status |
+| ----- | ----- | -------- | ------ |
+| Foundations | Service accounts, FastAPI skeleton, dev envs, marketing site baseline | Complete | ? |
+| Booking & Meet Automation | Booking wizard, Stripe checkout, Meet link automation, reminder emails | 2025 Q4 | ?? In progress |
+| Typing Metrics | Typing.com CSV ingestion, metrics persistence, analytics dashboards | 2026 Q1 | ?? Planned |
+| AI Progress Engine | Rules engine, LLM narratives, weekly PDF/email delivery | 2026 Q2 | ?? Planned |
+| AI Co-Teacher | Live companion, TTS cues, operator shortcuts | 2026 Q3 | ?? Planned |
+| Parent Dashboard | Metrics graphs, AI insights, package management, rescheduling | 2026 Q3 | ?? Planned |
+| Ops Automation | Waitlists, no-show handling, job queues, ops dashboards | 2026 Q4 | ?? Planned |
 
-## Phase 1 – Booking & Meet Automation (Day 2-4)
-- Build booking wizard in Next.js: choose program ? select slot ? checkout ? confirmation.
-- Integrate Stripe Checkout (trial, packages, memberships); map products to courses.
-- Auto-create Google Calendar events with Meet links; cap sessions (capacity = 4) and lock when full.
-- Email flows (Resend/SendGrid): confirmation with ICS, 24h reminder, 2h reminder.
-- Deliverable: parents self-serve booking, receive Meet link instantly, no manual coordination.
+## Phase details
 
-## Phase 2 – Typing.com Data Ingestion (Day 4-9)
-- Admin upload workflow for CSV exports ? Pandas parser ? metrics table.
-- Persist daily aggregates (WPM, accuracy, time spent) plus raw blob for audit.
-- Plan private API/headless scrape for future automated imports; encapsulate in `services/ai`.
+### Foundations (complete)
+- Vite marketing site with updated CTA copy, roadmap PDF, and Typing Playground.
+- Shared config module for booking/API base URLs.
+- FastAPI skeleton with contact endpoint and integration stubs.
 
-## Phase 3 – AI Progress Engine (Day 9-13)
-- Encode deterministic rules: plateau (<2 WPM in 14 days), accuracy (<90% for 3 sessions), consistency (<2 sessions/week).
-- Generate parent + kid narratives via LLM prompts (see `docs/prompts.md`).
-- Store rendered reports; email weekly Sunday 5pm with PDF attachments.
+### Booking & Meet Automation (in progress)
+- Finish Stripe checkout handoff (test and live keys, product mapping, webhooks).
+- Automate Google Calendar event creation and reminders via Resend.
+- Harden admin tools for session creation, cancellation, and notifications.
 
-## Phase 4 – AI Co-Teacher (Day 13-20)
-- MVP: Sidecar web companion delivering chat + TTS cues alongside Typing.com sessions.
-- Stretch: virtual Meet participant ("Serenity AI") or Google Meet Add-on.
-- Implement operator hotkeys (Ctrl+1 praise, Ctrl+2 challenge, Ctrl+3 accuracy nudge, Ctrl+4 break, Ctrl+M mute).
+### Typing Metrics (planned)
+- Automate Typing.com ingestion (API or headless) and normalize metrics.
+- Persist aggregates (WPM, accuracy, time spent) and expose API endpoints.
+- Surface benchmarks inside parent dashboard and internal reporting.
 
-## Phase 5 – Parent Dashboard (Day 20-24)
-- Surface metrics graphs (WPM, accuracy, time spent; 7/30/90 day filters).
-- Display AI insights, package balances, upcoming sessions, reschedule links, milestone certificates.
+### AI Progress Engine (planned)
+- Implement deterministic rules (plateaus, accuracy dips, consistency flags).
+- Use prompt blueprints (`docs/prompts.md`) for parent + kid messaging.
+- Store generated PDFs and email weekly summaries.
 
-## Phase 6 – Ops Automation (Day 24-27)
-- No-show detection (10 min late ? auto email + reschedule link).
-- Waitlist auto-fill, series scheduling (e.g., Tue 4pm for 4 weeks) with credit management.
-- Extend queues/jobs for reminders, expirations, and audit logging.
+### AI Co-Teacher (planned)
+- Build sidecar experience for live Meet sessions with chat + TTS.
+- Implement hotkeys for praise, challenges, accuracy nudges, and breaks.
 
-Iterate quickly per phase; keep shipping increments that solve admin bottlenecks while data/AI capabilities mature.
+### Parent Dashboard (planned)
+- Authentication (Clerk/Auth.js) with parent role gating.
+- Metrics graphs, AI insights, package balance, schedule management.
+
+### Ops Automation (planned)
+- Waitlist auto-fill, series scheduling, no-show follow-ups.
+- Queue workers (Celery/RQ/BullMQ) and audit logging.
+
+Revisit this roadmap monthly to reflect delivery progress and reprioritize as new insights arrive.

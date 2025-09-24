@@ -2,55 +2,55 @@
 
 ```
 Parents / Students
-     ¦
-     ?
+     |
+Landing Site (Vite + React)
+     |
 Booking Portal (Next.js App Router)
-     ¦
-     ?
-Backend (FastAPI or NestJS)
-     +-- Google Calendar (service account; auto Meet links)
-     +-- Stripe (Checkout, webhooks, billing logic)
-     +-- Typing.com (CSV uploads ? future API integration)
-     +-- Postgres (students, sessions, enrollments, metrics, reports, webhooks)
-     +-- Redis / queue (scheduler, reminders, waitlist automation)
-     +-- AI Services
-           +-- Progress analyzer (Pandas, rules engine)
-           +-- Feedback writer (LLM prompts)
-           +-- TTS voice co-teacher
+     |
+FastAPI Backend
+     +-- Google Calendar (service account; Meet links, future automation)
+     +-- Stripe (Checkout handoff, webhooks – pending live keys)
+     +-- Typing.com (CSV uploads today, API integration later)
+     +-- Postgres (planned production datastore; SQLite in dev)
+     +-- Redis / queue (planned for reminders, waitlists)
+     +-- AI services (planned summaries, co-teacher)
 
-Parent Dashboard (Next.js or shared UI package)
-Notifications (Resend/SendGrid for email, Twilio optional for SMS)
+Parent Dashboard (planned)
+Notifications (Resend email today, Twilio SMS optional later)
 ```
 
-## Service Boundaries
+## Current components
 
-- **Booking Portal (apps/booking-portal)**
-  - App Router, server actions for booking flow, Stripe Checkout integration.
-  - Uses shared UI tokens/components from `packages/shared`.
-  - Calls backend availability and checkout endpoints via typed client.
+### Landing site (`apps/serenitys-keys-landing`)
+- Vite + React with client-side routing.
+- Shared config module exposes `BOOKING_BASE_URL`, `API_BASE_URL`, and Stripe keys from env.
+- Pages include programs, pricing, policies, roadmap, and the `/try-typing` playground (timer, accuracy, WPM metrics).
+- Contact form hits `sendContactMessage` which posts to backend and falls back to Formspree when offline.
 
-- **Backend API (services/backend)**
-  - FastAPI (Python) for Pandas-native data pipelines or NestJS (Node) for full TypeScript stack.
-  - Owns domain logic: availability, capacity caps, waitlists, payment reconciliation.
-  - Manages Google Calendar service account, Meet link creation, and webhook ingestion (Stripe, notifications).
+### Booking portal (`apps/booking-portal`)
+- Next.js App Router, server actions planned for checkout flow.
+- Admin tooling for Typing.com CSV import and session creation.
+- Depends on backend JWT auth and `NEXT_PUBLIC_API_BASE_URL`.
 
-- **AI Services (services/ai)**
-  - Batch jobs: weekly progress analysis, report generation, email templating.
-  - Real-time aids: mini-challenge generator, co-teacher interaction cues.
-  - Uses OpenAI (LLMs), ElevenLabs/Coqui (TTS), Pandas/NumPy for metrics trends.
+### Backend (`services/backend/serenitys-keys-backend`)
+- FastAPI scaffold with SQLAlchemy models, Stripe/Google/Resend integration stubs, and Uvicorn dev setup.
+- Uses SQLite for local work; migrations and Postgres configuration live in `infra/db`.
+- Exposes placeholders for availability, contact capture, enrollments, and metrics ingestion.
 
-- **Parent Dashboard (apps/parent-dashboard)**
-  - Auth (Clerk/Auth.js) gating parent role.
-  - Surfaces metrics graphs, AI comments, package balance, upcoming sessions, certificates.
+### Docs & Infra (`docs/`, `infra/`)
+- Architecture, roadmap, privacy, and prompt guidance now reflect the latest site content and upcoming milestones.
+- Infra folder houses schema snapshots, job specs, and deployment notes for when Postgres/Redis go live.
 
-- **Infrastructure (infra/)**
-  - `db/` tracks schema definitions, migrations, and ERD snapshots.
-  - `jobs/` schedules Celery/RQ/BullMQ workers and automation playbooks (no-shows, reminders, report cadence).
-  - `notifications/` manages provider configs (Resend templates, Twilio messaging services).
+## Near-term build targets
+- Promote Stripe + Resend credentials to env-managed secrets and finish checkout webhooks.
+- Stand up Postgres + Redis in hosted environments and wire migrations/queues.
+- Automate Typing.com ingestion (headless or API) and surface metrics in parent dashboard.
+- Layer deterministic rules + LLM prompts for weekly progress summaries and PDF exports.
+- Deliver parent dashboard with metrics graphs, AI insights, and self-service scheduling.
 
-## Data Model Snapshot
+## Data model (planned baseline)
 
-| Table | Key Fields |
+| Table | Key fields |
 | ----- | ---------- |
 | parents | id, name, email, phone |
 | students | id, parent_id (FK), name, dob, level, notes |
@@ -61,17 +61,15 @@ Notifications (Resend/SendGrid for email, Twilio optional for SMS)
 | reports | id, student_id, period_start, period_end, summary_text, pdf_url |
 | webhooks | id, provider, payload, created_at |
 
-Roles: admin (you), coach (assistants), parent (portal access).
+Roles include admin, coach, and parent once auth is in place.
 
-## API Surface (Initial)
+## API surface (in development)
 
-- `POST /api/booking/availability` – filter by course, cohort size, delivery mode.
-- `POST /api/booking/checkout` – create Stripe checkout + provisional seat hold.
-- `POST /api/booking/confirm` – Stripe webhook finalizes seat, issues Meet link.
-- `GET /api/parent/dashboard` – aggregated dashboard data for authenticated parent.
-- `POST /api/typing/import` – CSV upload of Typing.com exports (admin only).
-- `POST /api/reports/generate` – weekly job trigger for AI summaries.
-- `POST /api/sessions/cancel` – parent cancellation with waitlist backfill.
-- `POST /api/waitlist/join` – register interest when capacity is full.
+- `POST /api/contact` – landing site contact + waitlist capture (live).
+- `POST /api/typing/import` – CSV upload for Typing.com exports (admin).
+- `POST /api/booking/availability` – fetch open sessions (stubbed).
+- `POST /api/booking/checkout` – Stripe checkout session provisioning (stubbed).
+- `POST /api/booking/confirm` – webhook to finalize enrollment (planned).
+- `GET /api/parent/dashboard` – metrics + schedule aggregation (planned).
 
-Build thin clients for these endpoints in `packages/shared` so every app stays synchronized with backend contracts.
+Keep clients thin by consuming generated TypeScript/Python SDKs once the backend contracts solidify.

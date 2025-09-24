@@ -1,47 +1,65 @@
 # Serenity's Keys Hub
 
-Modular workspace for the Serenity's Keys typing academy. The hub separates UI experiences, backend services, AI utilities, and infrastructure so each deliverable can ship on its own cadence.
+Workspace for the Serenity's Keys typing program. Each app can ship independently while sharing a common product plan.
 
-## Progress Snapshot
-- Marketing landing site (`apps/serenitys-keys-landing`) is production-ready: multi-page React experience, SEO metadata hook, and contact/enrollment forms that call the backend with Formspree fallbacks.
-- Booking portal (`apps/booking-portal`) delivers program selection, availability lookup, checkout kickoff, and an admin console for Typing.com CSV ingestion and session creation.
-- FastAPI backend (`services/backend/serenitys-keys-backend`) exposes availability, profile upsert, checkout handoff with Stripe fallback, contact capture, typing metrics import, and email/Meet integrations with safe dev defaults.
-- Developer tooling covers a docker-compose dev stack, `.env` samples, session seeding script, rate limiting on webhooks, and logging that surfaces request IDs for tracing.
-- Typing metrics pipeline stores CSV uploads and serves per-student metrics; a weekly scheduler currently sends plain progress nudges while AI summarization remains to be built.
-- AI services, shared packages, parent dashboard, and infrastructure automation are still scaffolds awaiting implementation.
+## What ships today
+- **Marketing site (pps/serenitys-keys-landing)** – Vite/React build with multi-page routing, contact + waitlist forms, booking CTAs that respect BOOKING_BASE_URL, a downloadable 12-week roadmap, and the new Typing Playground for quick WPM/accuracy trials.
+- **Booking portal (pps/booking-portal)** – Next.js App Router experience covering program discovery, availability lookups, and admin CSV tools. Stripe and full automation remain on the backlog.
+- **Backend skeleton (services/backend/serenitys-keys-backend)** – FastAPI service with stubs for availability, enrollment capture, and integrations (Stripe, Google Calendar, Resend). Uses SQLite for dev, ready to swap to Postgres.
+- **Docs & infra** – Architecture, phased roadmap, privacy commitments, and infrastructure plans live in docs/ and infra/. They mirror the current state and the next set of priorities.
 
-## Roadmap Alignment
-| Phase | Scope | Status |
-| ----- | ----- | ------ |
-| Phase 0 - Foundations | FastAPI skeleton, SQLite dev DB, admin JWT stub; Postgres/Redis provisioning still pending | Mostly done |
-| Phase 1 - Booking and Meet Automation | Booking portal flow, Stripe checkout handoff, Meet link plus email confirmations | MVP running; reminder jobs and Stripe credentials configuration outstanding |
-| Phase 2 - Typing.com Data Ingestion | CSV import, metrics persistence, trend reporting | CSV import and metrics API live; analytics and automation not started |
-| Phase 3 - AI Progress Engine | Rules, LLM summaries, PDF reports | Not started (scheduler only sends basic progress email) |
-| Phase 4 - AI Co-Teacher | Live co-teacher, TTS cues | Not started |
-| Phase 5-6 - Parent Dashboard and Ops Automation | Dashboard, waitlists, reminders, ops workflows | Not started |
+## Recent additions
+- Shared config (src/config.js) so landing pages pull booking and API base URLs from VITE_* env vars.
+- Roadmap PDF at /roadmap.pdf plus a dedicated /roadmap page with inline preview and download CTA.
+- Typing Playground available at /try-typing, with navigation links and a home-page callout so parents can test WPM and accuracy in 30/60 second runs.
+- Updated pricing copy, program benchmarks, policy quick answers, Launchpad gallery, and contact form acknowledgements to reflect what the team is telling families today.
 
-## Repo Layout
-- `apps/serenitys-keys-landing` React marketing site with reusable sections, email service helper, and `.env` override hooks.
-- `apps/booking-portal` Next.js App Router app powering family flows plus admin CSV/session utilities that rely on backend JWT auth.
-- `services/backend/serenitys-keys-backend` FastAPI service with SQLAlchemy models, Google Calendar and Resend integrations, Stripe placeholder checkout, and Alembic scaffolding.
-- `services/ai` and `packages/shared` currently document planned tooling; implementation is pending once AI features and shared UI kits are prioritized.
-- `apps/parent-dashboard` placeholder awaiting design and data contracts from the backend.
-- `docs/` and `infra/` capture architecture, roadmap, privacy notes, and future schema or job definitions used during planning.
+## Folder map
+- pps/serenitys-keys-landing – Marketing frontend (Vite + React).
+- pps/booking-portal – Operational web app for parents/admins (Next.js).
+- services/backend/serenitys-keys-backend – FastAPI API layer, integrations, background jobs (scaffolded).
+- services/ai – Placeholder for future AI pipelines (LLM summaries, co-teacher, etc.).
+- pps/parent-dashboard – Reserved for the future dashboard once data contracts are ready.
+- infra/ – Database schemas, job specs, and deployment notes.
+- docs/ – Living documentation (architecture, roadmap, privacy, prompt experiments).
 
-## Local Development
-- Copy any needed env files (`cp services/backend/serenitys-keys-backend/.env.example .env`) and populate Stripe, Resend, and Google credentials when available.
-- Backend: `python -m venv .venv && .\\.venv\\Scripts\\activate && pip install -r requirements.txt && uvicorn app.main:app --reload --host 0.0.0.0 --port 8080`.
-- Frontend apps: run `npm install && npm run dev` in `apps/serenitys-keys-landing` and `apps/booking-portal`, or start everything via `docker compose -f docker-compose.dev.yml up`.
-- Seed sessions with `python scripts/seed_sessions.py` (after activating the backend venv) and unlock admin tools using `NEXT_PUBLIC_ADMIN_TOKEN` / `ADMIN_API_TOKEN`.
+## Quick start
+`ash
+# Marketing site
+cd apps/serenitys-keys-landing
+npm install
+npm run dev
+# Optional: VITE_BOOKING_BASE_URL=http://localhost:3000 npm run dev
 
-## Outstanding Focus Areas
-- Migrate persistence from the SQLite default to managed Postgres, introduce Redis, and wire Alembic migrations plus job queue workers.
-- Replace Stripe placeholder flow with live keys, webhook signature verification, and product catalog mapping.
-- Build the AI progress engine: ingest trend analytics, generate LLM narratives, and produce parent-facing PDFs or emails.
-- Stand up the parent dashboard, shared UI kit, and ops automation (waitlists, reminders, no-show handling).
+# Booking portal
+cd ../booking-portal
+npm install
+npm run dev
 
-## Reference Docs
-- `docs/roadmap.md` for phased delivery plan and remaining milestones.
-- `docs/architecture.md` outlining service boundaries and data model.
-- `docs/privacy-and-compliance.md` covering policy commitments and controls.
-- `services/backend/README.md` for detailed API endpoints, admin flow, and env expectations.
+# Backend (FastAPI)
+cd ../../services/backend/serenitys-keys-backend
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8080
+`
+Use docker compose -f docker-compose.dev.yml up if you prefer the full stack. Populate .env files with Stripe, Resend, and Google credentials when they are ready.
+
+## Roadmap snapshot
+| Area | Status |
+| ---- | ------ |
+| Marketing site refresh (roadmap, typing test, copy) | **Done** |
+| Booking automation (Stripe live keys, reminders) | In progress |
+| Metrics ingestion (Typing.com CSV + analytics) | Staged (admin tooling exists; automation pending) |
+| AI progress engine + parent dashboard | Planned |
+| Ops automation (waitlists, no-show handling) | Planned |
+
+See docs/roadmap.md for detailed phases and dates.
+
+## Reference docs
+- docs/architecture.md – Current system diagram plus future-state notes.
+- docs/roadmap.md – Phased delivery plan with status tags.
+- docs/privacy-and-compliance.md – Consent, retention, and policy requirements.
+- docs/prompts.md – Prompt experiments for future AI-driven progress reports.
+
+Questions or updates? Open an issue or ping the team in the #serenitys-keys channel.
