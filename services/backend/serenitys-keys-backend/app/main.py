@@ -750,7 +750,7 @@ async def _get_or_create_student(db: AsyncSession, name: str) -> Student:
 
     placeholder_parent = Parent(
         name="CSV Import Parent",
-        email=f"placeholder+{uuid.uuid4().hex}@serenityskeys.com",
+    email=f"placeholder+{uuid.uuid4().hex}@serenitykeys.com",
     )
     db.add(placeholder_parent)
     await db.flush()

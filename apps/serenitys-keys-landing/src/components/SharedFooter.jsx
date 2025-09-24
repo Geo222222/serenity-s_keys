@@ -53,7 +53,7 @@ const SharedFooter = () => (
             <a href={`${BOOKING_BASE_URL}/launchpad`}>Launchpad</a>
           </li>
           <li>
-            <a href="mailto:hello@serenityskeys.com">hello@serenityskeys.com</a>
+            <a href="mailto:hello@serenitykeys.com">hello@serenitykeys.com</a>
           </li>
         </ul>
       </div>
@@ -66,7 +66,7 @@ const SharedFooter = () => (
     </div>
     <div className="container footer-bottom">
       <span>&copy; {new Date().getFullYear()} Serenity's Keys. All rights reserved.</span>
-      <span>Powered by Google Meet · Typing.com · Stripe</span>
+      <span>Powered by Google Meet ï¿½ Typing.com ï¿½ Stripe</span>
     </div>
   </footer>
 );

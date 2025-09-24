@@ -51,7 +51,7 @@ const Policies = () => {
             </article>
           </div>
           <p style={{ marginTop: "32px", color: "var(--color-muted)" }}>
-            Questions? Email <a href="mailto:hello@serenityskeys.com">hello@serenityskeys.com</a> and we'll respond within one business day.
+            Questions? Email <a href="mailto:hello@serenitykeys.com">hello@serenitykeys.com</a> and we'll respond within one business day.
           </p>
         </div>
       </section>

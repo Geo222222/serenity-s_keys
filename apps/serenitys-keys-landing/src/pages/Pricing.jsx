@@ -92,7 +92,7 @@ const Pricing = () => {
           <p className="section-subtitle" style={{ maxWidth: "720px" }}>
             We reserve seats each month for families needing reduced pricing. Email us with "Scholarship" in the subject and we'll set up a plan that fits.
           </p>
-          <a className="btn btn-secondary" href="mailto:hello@serenityskeys.com">
+          <a className="btn btn-secondary" href="mailto:hello@serenitykeys.com">
             Contact us about scholarships
           </a>
         </div>
